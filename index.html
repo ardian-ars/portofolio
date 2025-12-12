@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Ardian Aryasena - Visual Portfolio Navigator</title>
+<title>Ardian Aryasena - Playful Menu (Fixed Mobile)</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-/* GLOBAL FIX */
+/* --- GLOBAL FIXES --- */
 *, *::before, *::after { box-sizing: border-box; }
 
 :root{
@@ -20,7 +20,6 @@
   --muted:rgba(230,237,243,0.85);
   --glass:rgba(255,255,255,0.05);
 }
-
 body.light{
   --bg1:#f6f8fc;
   --bg2:#eef4ff;
@@ -31,34 +30,36 @@ body.light{
   --glass:rgba(0,0,0,0.05);
 }
 
-/* VIEWPORT FIX for all phones */
+/* viewport / height fallback untuk stabil di banyak browser mobile */
 html, body {
   height: 100dvh;
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* cegah overflow horizontal */
+  -webkit-text-size-adjust: 100%;
 }
 
 body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
-  font-family:"Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: env(safe-area-inset-top) 18px env(safe-area-inset-bottom);
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   background: linear-gradient(135deg, var(--bg1), var(--bg2));
   background-size: 240% 240%;
   animation: bgshift 14s ease infinite;
   color: var(--text);
 }
 
-@keyframes bgshift{
+/* subtle background movement */
+@keyframes bgshift {
   0%{background-position:0% 50%;}
   50%{background-position:100% 50%;}
   100%{background-position:0% 50%;}
 }
 
-/* ORNAMENT */
+/* --- ORNAMENT (responsive vw-based) --- */
 .orb {
   position:absolute;
   width:55vw;
@@ -66,21 +67,20 @@ body{
   max-width:420px;
   max-height:420px;
   border-radius:50%;
-  filter:blur(120px);
+  filter: blur(120px);
   opacity:0.30;
   pointer-events:none;
+  z-index:0;
 }
+.orb.one { background: var(--accent); top: -18vw; left: -12vw; animation: float1 10s ease-in-out infinite; }
+.orb.two { background: var(--accent2); right: -14vw; bottom: -12vw; animation: float2 9s ease-in-out infinite; }
+@keyframes float1 { 0%{transform:translateY(0)}50%{transform:translateY(-28px)}100%{transform:translateY(0)} }
+@keyframes float2 { 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
 
-.orb.one { background:var(--accent); top:-18vw; left:-12vw; animation: float1 10s ease-in-out infinite; }
-.orb.two { background:var(--accent2); right:-14vw; bottom:-12vw; animation: float2 9s ease-in-out infinite; }
-
-@keyframes float1 { 0%{transform:translateY(0)} 50%{transform:translateY(-28px)} 100%{transform:translateY(0)} }
-@keyframes float2 { 0%{transform:translateY(0)} 50%{transform:translateY(-18px)} 100%{transform:translateY(0)} }
-
-/* WRAPPER — CENTERED ALWAYS */
+/* --- WRAPPER: centered, bounded width --- */
 .wrap{
-  width: calc(100% - 40px);
-  max-width: 420px;
+  width: calc(100% - 36px); /* safe side padding */
+  max-width: 420px;         /* batasi lebar agar tidak melebar di tablet/desktop */
   margin: 0 auto;
   text-align:center;
   position:relative;
@@ -91,17 +91,22 @@ body{
   align-items:center;
   justify-content:center;
   gap:12px;
-  padding:10px;
+  padding: 10px;
 }
 
-/* PROFILE PHOTO */
+/* small screens narrower than 360px */
+@media (max-width:360px){
+  .wrap { width: calc(100% - 24px); }
+}
+
+/* --- PROFILE --- */
 .pfp{
   width:110px;
   height:110px;
   border-radius:50%;
   object-fit:cover;
   margin:0;
-  box-shadow:0 6px 28px rgba(75,139,255,0.45);
+  box-shadow: 0 6px 28px rgba(75,139,255,0.45);
   animation: popin 560ms cubic-bezier(.2,.9,.2,1);
 }
 @keyframes popin { from{transform:scale(.86);opacity:0} to{transform:scale(1);opacity:1} }
@@ -112,14 +117,13 @@ body{
   font-weight:700;
   color:var(--accent);
 }
-
 .subtitle{
   margin:4px 0 8px 0;
   font-size:0.92rem;
   color:var(--muted);
 }
 
-/* MENU BUTTONS */
+/* --- MENU --- */
 .menu{
   width:100%;
   display:flex;
@@ -127,40 +131,38 @@ body{
   gap:12px;
   margin-top:10px;
 }
-
 .menu button{
   width:100%;
-  padding:14px 16px;
+  padding:14px 14px;
   border-radius:14px;
   background:var(--glass);
   border:1px solid rgba(255,255,255,0.06);
   color:var(--text);
   font-size:1.02rem;
-  font-weight:700;
+  font-weight:700; /* bold label */
   cursor:pointer;
   backdrop-filter: blur(5px);
   transition: transform 110ms linear, box-shadow 140ms linear;
   position:relative;
   overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
 }
-
 .menu button:active{
-  transform:scale(.985);
-  box-shadow:0 10px 24px rgba(0,0,0,0.38);
+  transform: scale(.985);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.38);
 }
-
 .desc{
   display:block;
   margin-top:6px;
-  font-size:0.78rem;
+  font-size:0.78rem; /* smaller */
   font-weight:400;
   color:var(--muted);
 }
-
 .desc::before { content:"("; margin-right:4px; }
 .desc::after { content:")"; margin-left:4px; }
 
-/* MODE BUTTON */
+/* mode toggle */
 #modeBtn{
   margin-top:14px;
   padding:10px 20px;
@@ -172,36 +174,34 @@ body{
   cursor:pointer;
 }
 
-footer{
-  margin-top:16px;
-  font-size:0.82rem;
-  color:var(--muted);
-}
+/* footer */
+footer{ margin-top:16px; font-size:0.82rem; color:var(--muted); }
 
-/* Small phone fix */
-@media(max-width:360px){
-  .wrap{ width:calc(100% - 24px); }
-  .menu button{ padding:12px 12px; }
-  .pfp{ width:90px; height:90px; }
+/* extra responsive tweaks */
+@media(min-width:900px){
+  .wrap { max-width:720px; width: calc(100% - 80px); }
+}
+@media(max-width:520px){
+  .pfp { width:96px; height:96px; }
+  .menu button { padding:12px 12px; border-radius:12px; }
 }
 </style>
 </head>
-
 <body>
 
-<div class="orb one"></div>
-<div class="orb two"></div>
+<!-- ornaments -->
+<div class="orb one" aria-hidden="true"></div>
+<div class="orb two" aria-hidden="true"></div>
 
-<div class="wrap">
+<div class="wrap" role="main" aria-labelledby="main-title">
 
-  <!-- FOTO PROFIL: GANTI USERNAME -->
+  <!-- ganti username di sini -->
   <img class="pfp" src="https://github.com/YOUR_GITHUB_USERNAME.png?size=300" alt="Foto Ardian Aryasena">
 
-  <h1 class="title">Ardian Aryasena</h1>
+  <h1 id="main-title" class="title">Ardian Aryasena</h1>
   <p class="subtitle">Visual Portfolio Navigator</p>
 
-  <div class="menu">
-
+  <div class="menu" role="navigation" aria-label="Primary menu">
     <button data-key="cv">Curriculum Vitae</button>
 
     <button data-key="smd">
@@ -221,60 +221,45 @@ footer{
 
     <button data-key="event">
       Event Documentation
-      <span class="desc">Dokumentasi Kegiatan dan Peliputan Acara</span>
+      <span class="desc">Dokumentasi Kegiatan & Peliputan Acara</span>
     </button>
 
     <button data-key="contact">Contact Me</button>
-
   </div>
 
-  <button id="modeBtn">Light Mode</button>
+  <button id="modeBtn" aria-pressed="false">Light Mode</button>
 
   <footer>© 2025 Ardian — Playful minimalist UI</footer>
 </div>
 
 <script>
-/* ==============================
-   Link konfigurasi di sini
-============================== */
+/* --- isi link di sini --- */
 const LINKS = {
-  cv:"#",
-  smd:"#",
-  ill:"#",
-  copy:"#",
-  event:"#",
-  contact:"#"
+  cv:"#", smd:"#", ill:"#", copy:"#", event:"#", contact:"#"
 };
 
-document.querySelectorAll(".menu button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
+document.querySelectorAll('.menu button').forEach(btn=>{
+  btn.addEventListener('click', (e) => {
     const url = LINKS[btn.dataset.key];
-    if(!url || url==="#" ) return alert("Link belum diset.");
-    window.open(url,"_blank");
-  });
+    if(!url || url === "#"){
+      alert("Link belum diset. Silakan edit objek LINKS pada script.");
+      return;
+    }
+    window.open(url, '_blank');
+  }, { passive: true });
 });
 
-/* Light / Dark Mode */
-const modeBtn = document.getElementById("modeBtn");
-
-function updateMode(){
-  const isLight = document.body.classList.contains("light");
-  modeBtn.textContent = isLight ? "Dark Mode" : "Light Mode";
+/* light/dark */
+const modeBtn = document.getElementById('modeBtn');
+function setModeLabel(){
+  modeBtn.textContent = document.body.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
 }
-
-modeBtn.addEventListener("click",()=>{
-  document.body.classList.toggle("light");
-  try{ localStorage.setItem("theme", document.body.classList.contains("light") ? "1":"0"); }catch(e){}
-  updateMode();
+modeBtn.addEventListener('click', ()=>{
+  const isLight = document.body.classList.toggle('light');
+  try { localStorage.setItem('aria_theme', isLight ? '1' : '0'); } catch(e){}
+  setModeLabel();
 });
-
-(function(){
-  try{
-    if(localStorage.getItem("theme")==="1") document.body.classList.add("light");
-  }catch(e){}
-  updateMode();
-})();
+(function(){ try { if(localStorage.getItem('aria_theme') === '1') document.body.classList.add('light'); } catch(e){} setModeLabel(); })();
 </script>
-
 </body>
 </html>
