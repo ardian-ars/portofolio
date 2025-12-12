@@ -11,13 +11,14 @@
   :root{
     --bg1:#0b1220;
     --bg2:#101b33;
-    --accent:#1769ff;          /* Behance-like blue */
-    --accent2:#ff6ec4;         /* pink accent */
+    --accent:#1769ff;          /* Behance-like blue for text */
+    --accent2:#ff6ec4;
     --text:#e8eef6;
     --muted:rgba(230,237,243,0.85);
     --glass:rgba(255,255,255,0.04);
     --button-bg: rgba(255,255,255,0.14);
     --button-border: rgba(255,255,255,0.22);
+    --divider-grad: linear-gradient(90deg, #FFB74D 4%, #FF8A65 34%, #FFCDD2 64%, #90CAF9 100%);
   }
 
   body.light{
@@ -30,6 +31,7 @@
     --glass:rgba(0,0,0,0.04);
     --button-bg: rgba(0,0,0,0.06);
     --button-border: rgba(0,0,0,0.08);
+    --divider-grad: linear-gradient(90deg, #FFD54F 4%, #FF7043 34%, #FFCDD2 64%, #90CAF9 100%);
   }
 
   html, body { height:100dvh; margin:0; }
@@ -47,7 +49,7 @@
     color:var(--text);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    overflow:hidden;
+    overflow:auto;
   }
 
   @keyframes bgshift{
@@ -56,9 +58,10 @@
     100%{background-position:0% 50%;}
   }
 
-  .orb{ position:absolute; width:300px; height:300px; border-radius:50%; filter:blur(120px); opacity:0.30; z-index:0; pointer-events:none;}
-  .orb.one{ background:var(--accent); top:-80px; left:-60px; animation: float1 10s ease-in-out infinite; }
-  .orb.two{ background:var(--accent2); right:-80px; bottom:-60px; animation: float2 9s ease-in-out infinite; }
+  /* subtle ornaments */
+  .orb{ position:absolute; width:300px; height:300px; border-radius:50%; filter:blur(120px); opacity:0.20; z-index:0; pointer-events:none;}
+  .orb.one{ background:rgba(23,105,255,0.08); top:-80px; left:-60px; animation: float1 10s ease-in-out infinite; }
+  .orb.two{ background:rgba(255,110,196,0.06); right:-80px; bottom:-60px; animation: float2 9s ease-in-out infinite; }
   @keyframes float1 { 0%{transform:translateY(0)}50%{transform:translateY(-28px)}100%{transform:translateY(0)} }
   @keyframes float2 { 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
 
@@ -74,6 +77,7 @@
     padding: 18px;
     box-sizing:border-box;
     align-items:center;
+    background: transparent;
   }
 
   .pfp{
@@ -82,7 +86,7 @@
     border-radius:50%;
     object-fit:cover;
     margin:0;
-    box-shadow:0 6px 28px rgba(23,105,255,0.18);
+    box-shadow:0 6px 22px rgba(23,105,255,0.12);
     transform-origin:center;
     animation: popin 560ms cubic-bezier(.2,.9,.2,1);
   }
@@ -122,7 +126,7 @@
     padding: 6px 0 12px 0;
   }
 
-  /* Tombol kotak, radius 10px, strip kiri lebar */
+  /* BUTTON: removed colorful left strip; keep clean look */
   .menu .btn-link{
     width:100%;
     max-width:620px;
@@ -132,15 +136,14 @@
     border:1px solid var(--button-border);
     color:var(--accent);
     font-size:1.02rem;
-    font-weight:700;
+    font-weight:600; /* semi-bold title as requested */
     cursor:pointer;
     backdrop-filter: blur(8px);
     transition:
-      transform 180ms cubic-bezier(.2,.9,.2,1),
-      box-shadow 220ms cubic-bezier(.2,.9,.2,1),
-      background 200ms ease,
-      border-color 200ms ease,
-      color 160ms ease;
+      transform 160ms cubic-bezier(.2,.9,.2,1),
+      box-shadow 200ms cubic-bezier(.2,.9,.2,1),
+      background 180ms ease,
+      border-color 160ms ease;
     will-change: transform;
     text-align:left;
     position:relative;
@@ -150,34 +153,20 @@
     gap:16px;
     padding-right:64px;
     box-shadow:
-      0 6px 18px rgba(23,105,255,0.06),
-      0 3px 8px rgba(0,0,0,0.04);
+      0 6px 16px rgba(23,105,255,0.04),
+      0 3px 8px rgba(0,0,0,0.03);
+    /* remove any internal gradient decorations */
   }
 
-  .menu .btn-link::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
-    width:46px;
-    background:linear-gradient(
-      140deg,
-      rgba(23,105,255,1) 0%,
-      rgba(113,134,255,0.92) 40%,
-      rgba(255,110,196,0.88) 100%
-    );
-    opacity:0.95;
-    border-radius:10px 0 0 10px;
-    transition:width 240ms ease, opacity 200ms ease, transform 240ms ease;
-  }
-
+  /* label + description block */
   .btn-inner{
     display:flex;
     align-items:center;
     gap:12px;
     z-index:2;
     width:100%;
+    flex-direction:column;
+    align-items:flex-start;
   }
 
   .label{
@@ -185,17 +174,25 @@
     text-align:left;
     color:var(--accent);
     line-height:1;
+    font-weight:600;
   }
 
+  /* description smaller and wrapped in parentheses via pseudo */
   .desc{
     display:block;
     margin-top:6px;
-    font-size:0.78rem;
+    font-size:0.72rem; /* made smaller */
     font-weight:500;
     color:var(--muted);
     opacity:0.95;
     line-height:1.05;
+    position:relative;
   }
+  .desc::before{ content: "("; margin-right:4px; opacity:0.9; color:var(--muted); }
+  .desc::after{ content: ")"; margin-left:4px; opacity:0.9; color:var(--muted); }
+
+  /* hide CV description specifically */
+  .menu .btn-link[data-key="cv"] .desc{ display:none; }
 
   .ext-icon{
     position:absolute;
@@ -213,34 +210,25 @@
   }
   .ext-icon svg{ width:18px; height:18px; display:block; stroke:currentColor; fill:none; }
 
-  /* Hover lembut dan glow halus */
+  /* Hover: subtle lift and soft shadow; no neon gradient */
   .menu .btn-link:hover,
   .menu .btn-link:focus{
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow:
-      0 12px 30px rgba(23,105,255,0.12),
+      0 12px 30px rgba(23,105,255,0.08),
       0 6px 14px rgba(0,0,0,0.06);
-    border-color: rgba(255,255,255,0.28);
+    border-color: rgba(0,0,0,0.12);
     background: rgba(255,255,255,0.22);
-  }
-
-  .menu .btn-link:hover::before,
-  .menu .btn-link:focus::before{
-    width:54px;
   }
 
   .menu .btn-link:focus{
     outline:none;
     box-shadow:
-      0 0 0 6px rgba(23,105,255,0.07),
-      0 12px 30px rgba(23,105,255,0.10);
+      0 0 0 6px rgba(23,105,255,0.05),
+      0 12px 30px rgba(23,105,255,0.06);
   }
 
-  /* Specific: remove desc for CV visually */
-  .menu .btn-link[data-key="cv"] .desc{
-    display:none;
-  }
-
+  /* MODE BUTTON */
   #modeBtn{
     margin-top:10px;
     padding:10px 16px;
@@ -259,8 +247,20 @@
 
   #modeBtn:active{ transform:translateY(1px) scale(.997); }
 
+  /* DIVIDER (sebelum copyright) */
+  .divider{
+    margin-top:14px;
+    width:100%;
+    max-width:760px;
+    height:8px;
+    border-radius:6px;
+    background:var(--divider-grad);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow:hidden;
+  }
+
   footer{
-    margin-top:10px;
+    margin-top:12px;
     font-size:0.82rem;
     color:var(--muted);
     text-align:center;
@@ -382,14 +382,17 @@
 
   </nav>
 
-  <button id="modeBtn" aria-pressed="false" title="Toggle light dark mode">
+  <button id="modeBtn" aria-pressed="false" title="Toggle light/dark mode">
     <span id="modeIcon" aria-hidden="true">
+      <!-- default icon replaced in script -->
       <svg viewBox="0 0 24 24" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
       </svg>
     </span>
     <span id="modeLabel">Light Mode</span>
   </button>
+
+  <div class="divider" aria-hidden="true"></div>
 
   <footer>© 2025 Ardian. Playful minimalist UI</footer>
 </div>
@@ -418,7 +421,10 @@ document.querySelectorAll('.menu .btn-link').forEach(btn=>{
   }, {passive: true});
 });
 
-/* Light / Dark mode dengan ikon */
+/* Light / Dark mode dengan ikon
+   Default: saat pertama kali mengunjungi, page dibuat light mode.
+   Jika user sudah menyimpan preferensi, gunakan preferensi tersebut.
+*/
 const modeBtn = document.getElementById('modeBtn');
 const modeIcon = document.getElementById('modeIcon');
 const modeLabel = document.getElementById('modeLabel');
@@ -450,16 +456,24 @@ modeBtn.addEventListener('click', ()=>{
   setMode(isLight);
 });
 
-/* restore saved preference */
+/* restore saved preference
+   If no saved preference (null), default to light mode as requested.
+*/
 (function(){
   try{
-    const saved = localStorage.getItem('aria_theme');
-    setMode(saved === '1');
+    const saved = localStorage.getItem('aria_theme'); // null if not set
+    if(saved === null){
+      // default to light on first visit
+      setMode(true);
+      try{ localStorage.setItem('aria_theme', '1'); }catch(e){}
+    }else{
+      setMode(saved === '1');
+    }
   }catch(e){
-    setMode(false);
+    // fallback to light
+    setMode(true);
   }
 })();
-
 </script>
 </body>
 </html>
