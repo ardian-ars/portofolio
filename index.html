@@ -5,36 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>Ardian Aryasena - Menu</title>
 
-<!-- /* Mengimpor font Montserrat */ -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-  /* ----------------------------
-     PALETTE & VARIABEL GLOBAL
-     ---------------------------- */
   :root{
+    /* Light-only palette */
     --bg1: #f6f8fc;
     --bg2: #eef4ff;
-    --accent: #1769ff;          /* warna teks utama (mirip Behance) */
+    --accent: #1769ff;          /* Behance-like blue for text */
     --muted: rgba(0,0,0,0.55);
-    --card-bg: rgba(255,255,255,0.95);
+    --card-bg: rgba(255,255,255,0.85);
     --card-border: rgba(0,0,0,0.06);
-    --soft-shadow: 0 12px 34px rgba(23,105,255,0.06), 0 6px 14px rgba(0,0,0,0.04);
+    --soft-shadow: 0 10px 28px rgba(23,105,255,0.06), 0 4px 10px rgba(0,0,0,0.04);
     --soft-shadow-sm: 0 6px 18px rgba(23,105,255,0.04), 0 3px 8px rgba(0,0,0,0.03);
     --wa-green: #25D366;
-    --ig-grad: linear-gradient(135deg, #F58529 0%, #DD2A7B 50%, #8134AF 100%);
   }
 
-  /* ----------------------------
-     TYPOGRAPHY RESPONSIF
-     ---------------------------- */
+  /* flexible typography */
   html { font-size: 16px; }
   @media (min-width: 480px) { html { font-size: 16.5px; } }
   @media (min-width: 900px) { html { font-size: 17px; } }
 
   html, body { height:100dvh; margin:0; }
 
-  /* BODY: layout dasar halaman */
   body{
     min-height:100dvh;
     display:flex;
@@ -49,7 +42,6 @@
     overflow:auto;
   }
 
-  /* WRAPPER: pembungkus utama, fleksibel dan responsif */
   .wrap{
     width: min(96%, 920px);
     display:flex;
@@ -58,10 +50,8 @@
     padding:20px;
     box-sizing:border-box;
     align-items:center;
-    background: transparent;
   }
 
-  /* HEADER: foto profil, nama, subtitle */
   .header{
     display:flex;
     flex-direction:column;
@@ -70,27 +60,19 @@
     width:100%;
   }
 
-  /* FOTO PROFIL: lingkaran besar dan responsif
-     /* contoh ini bagian foto profil yang dibulatkan */ */
   .pfp{
-    /* ukuran responsif: minimal 140px, ideal 20vw, maksimal 220px */
-    width: clamp(140px, 20vw, 220px);
-    height: clamp(140px, 20vw, 220px);
-    border-radius:50%;               /* pastikan lingkaran sempurna */
+    width: clamp(84px, 12vw, 120px);
+    height: clamp(84px, 12vw, 120px);
+    border-radius:12px; /* slight rounding for boxed photo */
     object-fit:cover;
     box-shadow: var(--soft-shadow);
     transform-origin:center;
     transition: transform 220ms ease, box-shadow 220ms ease;
-    border: 4px solid rgba(255,255,255,0.85); /* bingkai tipis */
-    background-color: #fff;
   }
-  .pfp:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 22px 48px rgba(23,105,255,0.08);
-  }
+  .pfp:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(23,105,255,0.08); }
 
   .title{
-    font-size: clamp(1.05rem, 2.2vw, 1.6rem);
+    font-size: clamp(1.05rem, 2.2vw, 1.45rem);
     margin:0;
     font-weight:700;
     color:var(--accent);
@@ -105,7 +87,6 @@
     text-align:center;
   }
 
-  /* MENU: tombol utama */
   .menu{
     width:100%;
     display:flex;
@@ -115,8 +96,7 @@
     padding: 2px 0 8px 0;
   }
 
-  /* TOMBOL: card-like, responsif, shadow lembut
-     /* contoh ini bagian styling tombol */ */
+  /* Card-like buttons: responsive width and soft shadow */
   .menu .btn-link{
     width: clamp(280px, 86%, 780px);
     padding: 14px 18px;
@@ -125,7 +105,7 @@
     border: 1px solid var(--card-border);
     color:var(--accent);
     font-size: clamp(0.98rem, 1.6vw, 1.05rem);
-    font-weight:600; /* semi-bold judul tombol */
+    font-weight:600;
     cursor:pointer;
     backdrop-filter: blur(6px);
     display:flex;
@@ -157,13 +137,13 @@
     text-align:left;
     color:var(--accent);
     line-height:1;
-    font-weight:600;
+    font-weight:600; /* semi-bold title */
   }
 
   .desc{
     display:block;
     margin:0;
-    font-size: clamp(0.66rem, 1.1vw, 0.78rem);
+    font-size: clamp(0.66rem, 1.1vw, 0.78rem); /* smaller */
     font-weight:500;
     color:var(--muted);
     opacity:0.95;
@@ -190,7 +170,7 @@
   }
   .ext-icon svg{ width:18px; height:18px; display:block; stroke:currentColor; fill:none; }
 
-  /* FOOTER: teks copyright */
+  /* footer */
   footer{
     margin-top:6px;
     font-size:0.86rem;
@@ -198,8 +178,7 @@
     text-align:center;
   }
 
-  /* BUBBLE MESSAGES: WhatsApp & Instagram */
-  /* WA bubble: pojok kanan bawah (link ke www.whatsapp.com) */
+  /* WhatsApp bubble: fixed at bottom-right */
   .wa-bubble{
     position:fixed;
     right:18px;
@@ -219,60 +198,31 @@
   .wa-bubble:hover{ transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.22); }
   .wa-bubble svg{ width:20px; height:20px; display:block; flex-shrink:0; }
 
-  /* IG bubble: sedikit di atas WA (link ke instagram.com) */
-  .ig-bubble{
-    position:fixed;
-    right:18px;
-    bottom:78px; /* jarak di atas WA */
-    background: var(--ig-grad);
-    color:white;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 12px;
-    border-radius:999px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-    z-index:1000;
-    text-decoration:none;
-    transition: transform 160ms ease, box-shadow 160ms ease;
-  }
-  .ig-bubble:hover{ transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.22); }
-  .ig-bubble svg{ width:20px; height:20px; display:block; flex-shrink:0; }
-
-  /* MEDIA QUERIES: tweak untuk layar kecil */
+  /* small screens tweak */
   @media (max-width:420px){
     .wa-bubble{ right:12px; bottom:12px; padding:8px 10px; }
-    .ig-bubble{ right:12px; bottom:64px; padding:8px 10px; }
     .menu .btn-link{ padding:12px 12px; }
-    .pfp{ width: clamp(110px, 30vw, 160px); height: clamp(110px, 30vw, 160px); }
   }
 
 </style>
 </head>
 <body>
 
-<!-- WRAPPER UTAMA -->
 <div class="wrap" role="main" aria-labelledby="main-title">
 
-  <!-- HEADER: foto profil, nama, subtitle -->
   <div class="header" aria-hidden="false">
-    <!-- Foto profil dari GitHub - username ardian-ars
-         /* contoh ini bagian img profil */ -->
-    <img class="pfp" src="https://github.com/ardian-ars.png?size=460" alt="Foto Profil Ardian Aryasena">
+    <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Foto Profil Ardian Aryasena">
     <h1 id="main-title" class="title">Ardian Aryasena</h1>
     <p class="subtitle">Visual Portfolio Navigator</p>
   </div>
 
-  <!-- NAV: daftar tombol/menu -->
   <nav class="menu" role="navigation" aria-label="Primary menu">
 
-    <!-- Tombol CV tanpa deskripsi -->
     <button class="btn-link" data-key="cv" aria-label="Open Curriculum Vitae in new tab">
       <span class="btn-inner">
         <span class="label">Curriculum Vitae</span>
       </span>
       <span class="ext-icon" aria-hidden="true" title="Open in new tab">
-        <!-- ikon open in new tab -->
         <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M14 3H21V10" />
           <path d="M21 3L10 14" />
@@ -337,7 +287,7 @@
       </span>
     </button>
 
-    <!-- Contact button akan membuka mailto: -->
+    <!-- Contact button will open mail client via mailto: -->
     <button class="btn-link" data-key="contact" aria-label="Send email to Ardian">
       <span class="btn-inner">
         <span class="label">Contact Me</span>
@@ -354,15 +304,10 @@
 
   </nav>
 
-  <!-- PEMBATAS (opsional) -->
-  <!-- <div class="divider" aria-hidden="true"></div> -->
-
-  <!-- FOOTER: copyright -->
   <footer>© 2025 Ardian. Playful minimalist UI</footer>
 </div>
 
-<!-- BUBBLE WHATSAPP: buka www.whatsapp.com
-     /* contoh ini bagian bubble WA */ -->
+<!-- WhatsApp bubble -->
 <a class="wa-bubble" href="https://www.whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="Buka WhatsApp">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M20.52 3.48A11.97 11.97 0 0012 0C5.37 0 .02 5.35.02 12c0 2.12.55 4.17 1.6 6.01L0 24l6.2-1.59A11.96 11.96 0 0012 24c6.63 0 12-5.35 12-12 0-3.21-1.24-6.22-3.48-8.52z" stroke="white" stroke-width="0.6" fill="white" opacity="0.06"/>
@@ -371,17 +316,8 @@
   <span style="font-weight:600;font-size:0.93rem;">WhatsApp</span>
 </a>
 
-<!-- BUBBLE INSTAGRAM: buka instagram.com
-     /* contoh ini bagian bubble Instagram */ -->
-<a class="ig-bubble" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Buka Instagram">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="white">
-    <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.2A4.8 4.8 0 1016.8 13 4.8 4.8 0 0012 8.2zM18.5 6.2a1.1 1.1 0 11-1.1-1.1 1.1 1.1 0 011.1 1.1z" opacity="0.98"/>
-  </svg>
-  <span style="font-weight:600;font-size:0.93rem;">Instagram</span>
-</a>
-
 <script>
-/* KONFIGURASI LINK UNTUK TOMBOL (contoh bagian pengaturan link) */
+/* Configure your destination links here */
 const LINKS = {
   cv: "https://example.com/cv",
   smd: "https://example.com/social",
@@ -391,7 +327,7 @@ const LINKS = {
   contact: "mailto:ardian.aryasena@gmail.com"
 };
 
-/* FUNGSI: membuka link ketika tombol diklik (contoh bagian interaksi tombol) */
+/* open link saat tombol diklik */
 document.querySelectorAll('.menu .btn-link').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     const key = btn.dataset.key;
@@ -400,17 +336,17 @@ document.querySelectorAll('.menu .btn-link').forEach(btn=>{
       console.warn('Link belum diset untuk key:', key);
       return;
     }
+    // use window.location for mailto to open client; window.open also works
     if(url.startsWith('mailto:')) {
-      window.location.href = url; // membuka email client
+      window.location.href = url;
     } else {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
   }, {passive: true});
 });
 
-/* MODE: halaman hanya menggunakan light mode (tidak ada toggle).
-   Kode ini sengaja kosong karena semua gaya sudah memakai light mode.
-*/
+/* Ensure initial state is light-only (no dark toggle) */
+/* Nothing required: CSS is light by default */
 </script>
 </body>
 </html>
