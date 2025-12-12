@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aria - Minimal Menu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-1: #0b0f1a;
+    --bg-2: #0f1a2b;
+    --card: rgba(255,255,255,0.04);
+    --accent: #0057ff;
+    --text: #e6edf3;
+    --muted: rgba(230,237,243,0.85);
+  }
+
+  body.light {
+    --bg-1: #f6f8fb;
+    --bg-2: #eef4ff;
+    --card: rgba(0,0,0,0.04);
+    --accent: #0047d6;
+    --text: #111827;
+    --muted: rgba(17,24,39,0.88);
+  }
+
+  /* Background gradient gentle animation */
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: var(--text);
+    background: linear-gradient(120deg, var(--bg-1) 0%, var(--bg-2) 60%);
+    background-size: 240% 240%;
+    animation: bgShift 14s ease-in-out infinite;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Center card */
+  .card {
+    width:100%;
+    max-width:720px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:14px;
+    padding:28px;
+    box-sizing:border-box;
+    box-shadow: 0 12px 36px rgba(2,6,23,0.5);
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:18px;
+  }
+
+  .brand {
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+
+  .logo {
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(135deg, rgba(0,87,255,0.12), rgba(0,87,255,0.04));
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  h1 {
+    margin:0;
+    font-size:1.05rem;
+    color:var(--accent);
+    font-weight:600;
+  }
+
+  p.lead {
+    margin:6px 0 0 0;
+    font-size:0.88rem;
+    color:var(--muted);
+  }
+
+  .controls { display:flex; gap:8px; align-items:center; }
+
+  .btn-ghost {
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:0.88rem;
+    transition: all 180ms ease;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0,87,255,0.9);
+    color:var(--accent);
+    background: rgba(0,87,255,0.04);
+  }
+
+  /* main buttons area */
+  .menu {
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    align-items:center;
+    margin-top:8px;
+    flex-wrap:wrap;
+  }
+
+  .menu a {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-width:180px;
+    max-width:320px;
+    padding:14px 18px;
+    border-radius:12px;
+    text-decoration:none;
+    color:var(--text);
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 20px rgba(2,6,23,0.25);
+    transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
+    font-weight:600;
+    font-size:0.98rem;
+    text-align:center;
+  }
+
+  .menu a:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 46px rgba(0,0,0,0.45);
+    border-color: rgba(0,87,255,0.12);
+  }
+
+  .menu .label { display:block; }
+  .menu .sub { display:block; font-weight:400; font-size:0.82rem; color:var(--muted); margin-top:6px; }
+
+  /* responsive */
+  @media (max-width:680px) {
+    .menu { gap:10px; }
+    .menu a { min-width:100%; padding:12px 14px; font-size:0.95rem; }
+    .card { padding:18px; border-radius:10px; }
+  }
+
+  footer {
+    margin-top:18px;
+    text-align:center;
+    color:var(--muted);
+    font-size:0.82rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="card" role="main" aria-labelledby="site-title">
+  <header>
+    <div class="brand" aria-hidden="false">
+      <div class="logo" aria-hidden="true">
+        <!-- simple professional glyph -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="18" height="18" rx="4" fill="white" opacity="0.05"></rect>
+          <path d="M7 12L10.5 8.5L14 12L17 9" stroke="#58A6FF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div>
+        <h1 id="site-title">Aria</h1>
+        <p class="lead">Professional portfolio - concise and minimal</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="modeBtn" class="btn-ghost" aria-pressed="false">Light Mode</button>
+    </div>
+  </header>
+
+  <nav class="menu" aria-label="Primary menu">
+    <!--
+      /* TEKS YANG BISA ANDA UBAH:
+         Ubah label dan link pada objek LINKS di bagian <script>.
+    -->
+    <a href="#" data-key="one">
+      <span class="label" id="l_one">About</span>
+      <span class="sub" id="s_one">Profile and summary</span>
+    </a>
+
+    <a href="#" data-key="two">
+      <span class="label" id="l_two">Portfolio</span>
+      <span class="sub" id="s_two">Selected projects</span>
+    </a>
+
+    <a href="#" data-key="three">
+      <span class="label" id="l_three">Contact</span>
+      <span class="sub" id="s_three">Get in touch</span>
+    </a>
+  </nav>
+
+  <footer>
+    <!--
+      /* TEKS YANG BISA ANDA UBAH:
+         Ganti kredit di bawah sesuai keinginan, contoh: "Ardian 2025. Inspired by ..."
+    -->
+    © 2025 Ardian. Inspired by clean design principles.
+  </footer>
+</div>
+
+<script>
+/* --------------------------
+   /* TEKS & LINK YANG BISA DIUBAH
+   Ubah nilai pada objek LINKS dan LABELS sesuai kebutuhan.
+--------------------------- */
+
+const LINKS = {
+  /* ganti '#' dengan URL tujuan */
+  one: '#',      // tombol pertama
+  two: '#',      // tombol kedua
+  three: '#'     // tombol ketiga
+};
+
+const LABELS = {
+  one: { title: 'About', subtitle: 'Profile and summary' },
+  two: { title: 'Portfolio', subtitle: 'Selected projects' },
+  three: { title: 'Contact', subtitle: 'Get in touch' }
+};
+
+/* apply labels */
+Object.keys(LABELS).forEach(k=>{
+  const lbl = LABELS[k];
+  const t = document.getElementById('l_' + k);
+  const s = document.getElementById('s_' + k);
+  if(t) t.textContent = lbl.title;
+  if(s) s.textContent = lbl.subtitle;
+});
+
+/* hook links */
+document.querySelectorAll('.menu a').forEach(a=>{
+  const key = a.dataset.key;
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    const url = (LINKS[key] || '').trim();
+    if(!url || url === '#') {
+      alert('Link belum diset untuk tombol ini. Edit objek LINKS di kode.');
+      return;
+    }
+    window.open(url, '_blank');
+  });
+});
+
+/* Light/Dark toggle */
+const modeBtn = document.getElementById('modeBtn');
+function updateModeLabel(){
+  const isLight = document.body.classList.contains('light');
+  modeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+  modeBtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+}
+
+modeBtn.addEventListener('click', ()=>{
+  const isLight = document.body.classList.toggle('light');
+  try { localStorage.setItem('aria_pref_light', isLight ? '1' : '0'); } catch(e){}
+  updateModeLabel();
+});
+
+/* restore preference */
+(function(){
+  try {
+    const saved = localStorage.getItem('aria_pref_light');
+    if(saved === '1') document.body.classList.add('light');
+  } catch(e){}
+  updateModeLabel();
+})();
+</script>
+</body>
+</html>
