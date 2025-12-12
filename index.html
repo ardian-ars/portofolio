@@ -3,205 +3,225 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Ardian Aryasena - Playful Menu (Fixed Mobile)</title>
+<title>Ardian Aryasena - Menu</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- GLOBAL FIXES --- */
-*, *::before, *::after { box-sizing: border-box; }
+  /* global box-sizing */
+  *, *::before, *::after { box-sizing: border-box; }
 
-:root{
-  --bg1:#0b1220;
-  --bg2:#101b33;
-  --accent:#4b8bff;
-  --accent2:#ff66c4;
-  --text:#e8eef6;
-  --muted:rgba(230,237,243,0.85);
-  --glass:rgba(255,255,255,0.05);
-}
-body.light{
-  --bg1:#f6f8fc;
-  --bg2:#eef4ff;
-  --accent:#1b5eff;
-  --accent2:#fd4ea8;
-  --text:#1a1a1a;
-  --muted:rgba(0,0,0,0.6);
-  --glass:rgba(0,0,0,0.05);
-}
+  :root{
+    --bg1:#0b1220;
+    --bg2:#101b33;
+    --accent:#4b8bff;
+    --accent2:#ff66c4;
+    --text:#e8eef6;
+    --muted:rgba(230,237,243,0.85);
+    --glass:rgba(255,255,255,0.05);
+  }
 
-/* viewport / height fallback untuk stabil di banyak browser mobile */
-html, body {
-  height: 100dvh;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* cegah overflow horizontal */
-  -webkit-text-size-adjust: 100%;
-}
+  body.light{
+    --bg1:#f6f8fc;
+    --bg2:#eef4ff;
+    --accent:#1b5eff;
+    --accent2:#fd4ea8;
+    --text:#1a1a1a;
+    --muted:rgba(0,0,0,0.6);
+    --glass:rgba(0,0,0,0.05);
+  }
 
-body{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: env(safe-area-inset-top) 18px env(safe-area-inset-bottom);
-  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  background: linear-gradient(135deg, var(--bg1), var(--bg2));
-  background-size: 240% 240%;
-  animation: bgshift 14s ease infinite;
-  color: var(--text);
-}
+  /* viewport fallback + tidak memblokir scroll */
+  html, body {
+    height: 100dvh;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
 
-/* subtle background movement */
-@keyframes bgshift {
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;           /* penting: jangan center vertikal */
+    justify-content:center;
+    padding:28px 18px;                /* beri ruang atas/bawah untuk scroll */
+    font-family:"Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:linear-gradient(135deg, var(--bg1), var(--bg2));
+    animation:bgshift 14s ease infinite;
+    background-size:240% 240%;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
 
-/* --- ORNAMENT (responsive vw-based) --- */
-.orb {
-  position:absolute;
-  width:55vw;
-  height:55vw;
-  max-width:420px;
-  max-height:420px;
-  border-radius:50%;
-  filter: blur(120px);
-  opacity:0.30;
-  pointer-events:none;
-  z-index:0;
-}
-.orb.one { background: var(--accent); top: -18vw; left: -12vw; animation: float1 10s ease-in-out infinite; }
-.orb.two { background: var(--accent2); right: -14vw; bottom: -12vw; animation: float2 9s ease-in-out infinite; }
-@keyframes float1 { 0%{transform:translateY(0)}50%{transform:translateY(-28px)}100%{transform:translateY(0)} }
-@keyframes float2 { 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
+    /* izinkan scroll vertikal jika konten lebih panjang */
+    overflow-x:hidden;
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch; /* smoother scroll on iOS */
+  }
 
-/* --- WRAPPER: centered, bounded width --- */
-.wrap{
-  width: calc(100% - 36px); /* safe side padding */
-  max-width: 420px;         /* batasi lebar agar tidak melebar di tablet/desktop */
-  margin: 0 auto;
-  text-align:center;
-  position:relative;
-  z-index:5;
+  @keyframes bgshift{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+  }
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  padding: 10px;
-}
+  /* ORNAMENT PLAYFUL (vw-based agar tidak overflow) */
+  .orb{
+    position:absolute;
+    width:55vw;
+    height:55vw;
+    max-width:420px;
+    max-height:420px;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:0.30;
+    z-index:0;
+    pointer-events:none;
+  }
+  .orb.one{ background:var(--accent); top:-18vw; left:-12vw; animation: float1 10s ease-in-out infinite; }
+  .orb.two{ background:var(--accent2); right:-14vw; bottom:-12vw; animation: float2 9s ease-in-out infinite; }
+  @keyframes float1 { 0%{transform:translateY(0)}50%{transform:translateY(-28px)}100%{transform:translateY(0)} }
+  @keyframes float2 { 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
 
-/* small screens narrower than 360px */
-@media (max-width:360px){
-  .wrap { width: calc(100% - 24px); }
-}
+  /* WRAP: center horizontally, allow vertical growth */
+  .wrap{
+    width: calc(100% - 36px); /* beri margin sisi */
+    max-width: 420px;
+    margin: 18px auto;        /* beri margin top agar tidak langsung di pinggir */
+    text-align:center;
+    position:relative;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start; /* jangan center vertikal */
+    gap:12px;
+    padding: 14px;
+    box-sizing:border-box;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    border-radius: 12px;
+    /* shadow ringan supaya terlihat terangkat dari background */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  }
 
-/* --- PROFILE --- */
-.pfp{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  object-fit:cover;
-  margin:0;
-  box-shadow: 0 6px 28px rgba(75,139,255,0.45);
-  animation: popin 560ms cubic-bezier(.2,.9,.2,1);
-}
-@keyframes popin { from{transform:scale(.86);opacity:0} to{transform:scale(1);opacity:1} }
+  /* PROFILE PHOTO */
+  .pfp{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    object-fit:cover;
+    margin:8px 0 0 0;
+    box-shadow:0 6px 28px rgba(75,139,255,0.45);
+    animation: popin 560ms cubic-bezier(.2,.9,.2,1);
+  }
+  @keyframes popin { from{transform:scale(.86);opacity:0} to{transform:scale(1);opacity:1} }
 
-.title{
-  font-size:1.42rem;
-  margin:4px 0 0 0;
-  font-weight:700;
-  color:var(--accent);
-}
-.subtitle{
-  margin:4px 0 8px 0;
-  font-size:0.92rem;
-  color:var(--muted);
-}
+  .title{
+    font-size:1.4rem;
+    margin:6px 0 0 0;
+    font-weight:700;
+    color:var(--accent);
+    letter-spacing:0.2px;
+  }
 
-/* --- MENU --- */
-.menu{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin-top:10px;
-}
-.menu button{
-  width:100%;
-  padding:14px 14px;
-  border-radius:14px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.06);
-  color:var(--text);
-  font-size:1.02rem;
-  font-weight:700; /* bold label */
-  cursor:pointer;
-  backdrop-filter: blur(5px);
-  transition: transform 110ms linear, box-shadow 140ms linear;
-  position:relative;
-  overflow:hidden;
-  -webkit-tap-highlight-color: transparent;
-  will-change: transform;
-}
-.menu button:active{
-  transform: scale(.985);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.38);
-}
-.desc{
-  display:block;
-  margin-top:6px;
-  font-size:0.78rem; /* smaller */
-  font-weight:400;
-  color:var(--muted);
-}
-.desc::before { content:"("; margin-right:4px; }
-.desc::after { content:")"; margin-left:4px; }
+  .subtitle{
+    margin:4px 0 8px 0;
+    font-size:0.92rem;
+    color:var(--muted);
+  }
 
-/* mode toggle */
-#modeBtn{
-  margin-top:14px;
-  padding:10px 20px;
-  border-radius:999px;
-  background:transparent;
-  border:1px solid rgba(255,255,255,0.08);
-  color:var(--muted);
-  font-weight:600;
-  cursor:pointer;
-}
+  /* MENU */
+  .menu{
+    margin-top:8px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    align-items:center;
+    padding: 6px 0 12px 0;
+  }
 
-/* footer */
-footer{ margin-top:16px; font-size:0.82rem; color:var(--muted); }
+  .menu button{
+    width:100%;
+    max-width:380px;
+    padding:14px 16px;
+    border-radius:14px;
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--text);
+    font-size:1.02rem;
+    font-weight:700;
+    cursor:pointer;
+    backdrop-filter: blur(5px);
+    transition: transform 110ms linear, box-shadow 140ms linear;
+    will-change: transform;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
 
-/* extra responsive tweaks */
-@media(min-width:900px){
-  .wrap { max-width:720px; width: calc(100% - 80px); }
-}
-@media(max-width:520px){
-  .pfp { width:96px; height:96px; }
-  .menu button { padding:12px 12px; border-radius:12px; }
-}
+  .menu button:active{ transform: scale(0.985); box-shadow: 0 10px 24px rgba(0,0,0,0.38); }
+
+  .menu .desc{
+    display:block;
+    margin-top:6px;
+    font-size:0.78rem;
+    font-weight:400;
+    color:var(--muted);
+  }
+  .menu .desc::before{ content:"("; margin-right:4px; opacity:0.9; }
+  .menu .desc::after{ content:")"; margin-left:4px; opacity:0.9; }
+
+  /* mode toggle */
+  #modeBtn{
+    margin-top:12px;
+    padding:10px 20px;
+    border-radius:999px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.08);
+    color:var(--muted);
+    font-weight:600;
+    cursor:pointer;
+    transition:transform 140ms ease, color 140ms;
+  }
+  #modeBtn:active{ transform:translateY(1px) scale(.997); }
+
+  footer{
+    margin-top:16px;
+    font-size:0.82rem;
+    color:var(--muted);
+  }
+
+  /* responsive tweaks */
+  @media (max-width:520px){
+    .pfp{ width:96px; height:96px; }
+    .menu button{ max-width:92%; padding:12px 14px; border-radius:12px; font-size:1rem; }
+    .wrap{ padding-bottom: calc(env(safe-area-inset-bottom) + 12px); }
+  }
+  @media (min-width:900px){
+    .wrap { max-width:720px; width: calc(100% - 80px); }
+  }
 </style>
 </head>
 <body>
 
-<!-- ornaments -->
+<!-- Ornamen -->
 <div class="orb one" aria-hidden="true"></div>
 <div class="orb two" aria-hidden="true"></div>
 
 <div class="wrap" role="main" aria-labelledby="main-title">
 
-  <!-- ganti username di sini -->
-  <img class="pfp" src="https://github.com/YOUR_GITHUB_USERNAME.png?size=300" alt="Foto Ardian Aryasena">
+  <!-- FOTO PROFIL DARI GITHUB: ganti YOUR_GITHUB_USERNAME -->
+  <img class="pfp" src="https://github.com/YOUR_GITHUB_USERNAME.png?size=300" alt="Foto Profil Ardian Aryasena">
 
+  <!-- NAMA -->
   <h1 id="main-title" class="title">Ardian Aryasena</h1>
   <p class="subtitle">Visual Portfolio Navigator</p>
 
+  <!-- MENU 6 tombol -->
   <div class="menu" role="navigation" aria-label="Primary menu">
+
     <button data-key="cv">Curriculum Vitae</button>
 
     <button data-key="smd">
@@ -225,6 +245,7 @@ footer{ margin-top:16px; font-size:0.82rem; color:var(--muted); }
     </button>
 
     <button data-key="contact">Contact Me</button>
+
   </div>
 
   <button id="modeBtn" aria-pressed="false">Light Mode</button>
@@ -233,33 +254,47 @@ footer{ margin-top:16px; font-size:0.82rem; color:var(--muted); }
 </div>
 
 <script>
-/* --- isi link di sini --- */
+/* ==============================
+   /* GANTI LINK DI SINI (dalam JS)
+   ============================== */
 const LINKS = {
-  cv:"#", smd:"#", ill:"#", copy:"#", event:"#", contact:"#"
+  cv: "#",
+  smd: "#",
+  ill: "#",
+  copy: "#",
+  event: "#",
+  contact: "#"
 };
 
 document.querySelectorAll('.menu button').forEach(btn=>{
-  btn.addEventListener('click', (e) => {
-    const url = LINKS[btn.dataset.key];
-    if(!url || url === "#"){
-      alert("Link belum diset. Silakan edit objek LINKS pada script.");
+  btn.addEventListener('click', ()=>{
+    const key = btn.dataset.key;
+    const url = (LINKS[key] || '').trim();
+    if(!url || url === '#'){
+      alert('Link tombol ini belum diset. Edit objek LINKS pada script.');
       return;
     }
     window.open(url, '_blank');
-  }, { passive: true });
+  }, {passive: true});
 });
 
-/* light/dark */
+/* Light / Dark mode */
 const modeBtn = document.getElementById('modeBtn');
-function setModeLabel(){
-  modeBtn.textContent = document.body.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
+function updateModeLabel(){
+  const isLight = document.body.classList.contains('light');
+  modeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+  modeBtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
 }
 modeBtn.addEventListener('click', ()=>{
   const isLight = document.body.classList.toggle('light');
-  try { localStorage.setItem('aria_theme', isLight ? '1' : '0'); } catch(e){}
-  setModeLabel();
+  try{ localStorage.setItem('aria_theme', isLight ? '1' : '0'); }catch(e){}
+  updateModeLabel();
 });
-(function(){ try { if(localStorage.getItem('aria_theme') === '1') document.body.classList.add('light'); } catch(e){} setModeLabel(); })();
+(function(){
+  try{ if(localStorage.getItem('aria_theme') === '1') document.body.classList.add('light'); }catch(e){}
+  updateModeLabel();
+})();
+
 </script>
 </body>
 </html>
