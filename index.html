@@ -60,15 +60,15 @@
     width:100%;
   }
 
-  .pfp{
-    width: clamp(84px, 12vw, 120px);
-    height: clamp(84px, 12vw, 120px);
-    border-radius:12px; /* slight rounding for boxed photo */
-    object-fit:cover;
+.pfp{
+    width: clamp(92px, 13.2vw, 132px);   /* sekitar +10 persen */
+    height: clamp(92px, 13.2vw, 132px);  /* sekitar +10 persen */
+    border-radius: 50%;                 /* membuat foto menjadi lingkaran */
+    object-fit: cover;
     box-shadow: var(--soft-shadow);
-    transform-origin:center;
+    transform-origin: center;
     transition: transform 220ms ease, box-shadow 220ms ease;
-  }
+}
   .pfp:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(23,105,255,0.08); }
 
   .title{
