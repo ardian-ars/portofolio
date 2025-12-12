@@ -9,21 +9,23 @@
 
 <style>
   :root{
-    --bg1: #0b0f1a;
-    --bg2: #0f1a2b;
-    --accent: #0057ff;
-    --text: #e6edf3;
-    --muted: rgba(230,237,243,0.85);
-    --glass: rgba(255,255,255,0.04);
+    --bg1:#0b1220;
+    --bg2:#101b33;
+    --accent:#4b8bff;
+    --accent2:#ff66c4;
+    --text:#e8eef6;
+    --muted:rgba(230,237,243,0.85);
+    --glass:rgba(255,255,255,0.05);
   }
 
   body.light{
-    --bg1: #f6f8fb;
-    --bg2: #eef4ff;
-    --accent: #0047d6;
-    --text: #1a1a1a;
-    --muted: rgba(0,0,0,0.65);
-    --glass: rgba(0,0,0,0.06);
+    --bg1:#f6f8fc;
+    --bg2:#eef4ff;
+    --accent:#1b5eff;
+    --accent2:#fd4ea8;
+    --text:#1a1a1a;
+    --muted:rgba(0,0,0,0.6);
+    --glass:rgba(0,0,0,0.05);
   }
 
   body{
@@ -32,41 +34,38 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:20px;
+    padding:22px;
     font-family:"Montserrat", sans-serif;
-    color:var(--text);
     background:linear-gradient(135deg, var(--bg1), var(--bg2));
-    background-size:260% 260%;
-    animation:bgFlow 18s ease infinite;
-    position:relative;
+    animation:bgshift 14s ease infinite;
+    background-size:240% 240%;
+    color:var(--text);
     overflow:hidden;
   }
 
-  @keyframes bgFlow{
+  @keyframes bgshift{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
   }
 
-  /* ORNAMENT BACKGROUND */
+  /* PLAYFUL ORNAMENT */
   .orb{
     position:absolute;
-    width:340px;
-    height:340px;
+    width:300px;
+    height:300px;
     border-radius:50%;
-    filter:blur(110px);
+    filter:blur(120px);
     opacity:0.35;
-    z-index:0;
+    animation: float 9s ease-in-out infinite;
   }
-  .orb.one{
-    background:#003cff;
-    top: -80px;
-    left:-60px;
-  }
-  .orb.two{
-    background:#7f00ff;
-    right:-80px;
-    bottom:-60px;
+  .orb.one{background:var(--accent); top:-80px; left:-60px;}
+  .orb.two{background:var(--accent2); bottom:-80px; right:-50px;}
+
+  @keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-30px);}
+    100%{transform:translateY(0);}
   }
 
   .wrap{
@@ -74,29 +73,33 @@
     max-width:720px;
     text-align:center;
     position:relative;
-    z-index:5;
+    z-index:10;
   }
 
-  /* FOTO PROFIL */
   .pfp{
     width:112px;
     height:112px;
     border-radius:50%;
     object-fit:cover;
-    margin:0 auto 16px auto;
-    box-shadow:0 0 22px rgba(0,87,255,0.36);
+    margin:0 auto 16px;
+    box-shadow:0 0 25px rgba(75,139,255,0.5);
+    animation: popin 0.7s ease;
+  }
+  @keyframes popin{
+    0%{transform:scale(0.7); opacity:0;}
+    100%{transform:scale(1); opacity:1;}
   }
 
   .title{
+    font-size:1.4rem;
     margin:0;
-    font-size:1.35rem;
     font-weight:600;
     color:var(--accent);
   }
 
   .subtitle{
-    margin-top:4px;
-    font-size:0.94rem;
+    margin-top:6px;
+    font-size:0.95rem;
     color:var(--muted);
   }
 
@@ -106,58 +109,78 @@
     display:flex;
     flex-direction:column;
     gap:12px;
-    align-items:center;
   }
 
   .menu button{
     width:100%;
-    max-width:370px;
-    padding:14px 14px;
-    border-radius:12px;
+    max-width:360px;
+    margin:0 auto;
+    padding:14px 16px;
+    border-radius:14px;
     background:var(--glass);
-    border:1px solid rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.06);
     color:var(--text);
     font-size:1rem;
     font-weight:600;
     cursor:pointer;
     backdrop-filter:blur(5px);
-    transition:transform 150ms ease, box-shadow 150ms ease;
+    transition:transform 120ms ease, box-shadow 150ms ease;
+    will-change:transform;
+    position:relative;
+    overflow:hidden;
   }
 
+  /* SMOOTH MOBILE PRESS ANIMATION */
   .menu button:active{
-    transform:scale(0.96);
-    box-shadow:0 10px 28px rgba(0,0,0,0.45);
+    transform:scale(0.97);
+    box-shadow:0 6px 18px rgba(0,0,0,0.4);
   }
 
   .menu button:hover{
-    transform:translateY(-4px);
-    box-shadow:0 16px 40px rgba(0,0,0,0.45);
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,0.45);
+  }
+
+  /* PLAYFUL WAVE EFFECT on press */
+  .menu button::after{
+    content:"";
+    position:absolute;
+    width:180%;
+    height:180%;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) scale(0);
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    transition:transform 0.45s ease;
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .menu button:active::after{
+    transform:translate(-50%,-50%) scale(1);
   }
 
   .desc{
-    font-size:0.82rem;
+    font-size:0.83rem;
     font-weight:400;
     color:var(--muted);
     margin-top:4px;
   }
 
-  /* MODE TOGGLE */
   #modeBtn{
-    margin-top:26px;
+    margin-top:28px;
     padding:10px 22px;
     border-radius:999px;
     background:transparent;
-    border:1px solid rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.08);
     color:var(--muted);
-    font-weight:600;
     cursor:pointer;
-    backdrop-filter:blur(5px);
-    transition:all 180ms ease;
+    font-weight:600;
+    transition:all 150ms ease;
   }
   #modeBtn:hover{
     transform:translateY(-3px);
+    border-color:rgba(0,87,255,0.4);
     color:var(--accent);
-    border-color:rgba(0,87,255,0.3);
   }
 
   footer{
@@ -165,29 +188,27 @@
     font-size:0.82rem;
     color:var(--muted);
   }
+
 </style>
 </head>
 <body>
 
-<!-- Ornamen latar -->
+<!-- ORNAMENT -->
 <div class="orb one"></div>
 <div class="orb two"></div>
 
 <div class="wrap">
 
   <!-- FOTO PROFIL -->
-  <!-- Ganti YOUR_GITHUB_USERNAME -->
-  <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Foto Profil">
+  <img class="pfp" src="https://github.com/YOUR_GITHUB_USERNAME.png?size=300">
 
   <h1 class="title">Ardian Aryasena</h1>
-  <p class="subtitle">Portfolio Navigator</p>
+  <p class="subtitle">Visual Portfolio Navigator</p>
 
-  <!-- MENU -->
   <div class="menu">
 
     <button data-key="cv">
       Curriculum Vitae
-      <div class="desc">Dokumen CV versi lengkap</div>
     </button>
 
     <button data-key="smd">
@@ -202,57 +223,52 @@
 
     <button data-key="copy">
       Editorial Copywriting
-      <div class="desc">Portofolio Konten Berbasis Teks dan Storytelling Media</div>
+      <div class="desc">Portofolio Konten Teks dan Storytelling Media</div>
     </button>
 
     <button data-key="event">
       Event Documentation
-      <div class="desc">Portofolio Dokumentasi Kegiatan dan Peliputan Acara</div>
+      <div class="desc">Dokumentasi Kegiatan & Peliputan Acara</div>
     </button>
 
     <button data-key="contact">
       Contact Me
-      <div class="desc">Hubungi saya untuk kerjasama</div>
     </button>
 
   </div>
 
   <button id="modeBtn">Light Mode</button>
 
-  <footer>
-    © 2025 Ardian — Visual system inspired by calm minimalist UI
-  </footer>
+  <footer>© 2025 Ardian — Built with a playful minimalist UI</footer>
 
 </div>
 
 <script>
-/* --------------------------------------
-   /* UBAH LINK DI SINI SESUAI KEBUTUHAN
------------------------------------------ */
+/* ----------------------------
+   EDIT LINK DI SINI
+----------------------------- */
 const LINKS = {
-  cv: "#",
-  smd: "#",
-  ill: "#",
-  copy: "#",
-  event: "#",
-  contact: "#"
+  cv:"#",
+  smd:"#",
+  ill:"#",
+  copy:"#",
+  event:"#",
+  contact:"#"
 };
 
-/* klik tombol */
 document.querySelectorAll(".menu button").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const key = btn.dataset.key;
-    const url = (LINKS[key] || "").trim();
-
-    if(!url || url === "#"){
-      alert("Link tombol ini belum diisi. Edit bagian LINKS pada script.");
+    const url = (LINKS[key]||"").trim();
+    if(!url || url==="#"){
+      alert("Link belum diisi. Edit bagian LINKS pada script.");
       return;
     }
-    window.open(url, "_blank");
+    window.open(url,"_blank");
   });
 });
 
-/* Light/Dark Mode */
+/* LIGHT / DARK */
 const modeBtn = document.getElementById("modeBtn");
 
 function updateMode(){
@@ -263,16 +279,13 @@ function updateMode(){
 
 modeBtn.addEventListener("click", ()=>{
   document.body.classList.toggle("light");
-  try{ localStorage.setItem("aria_theme", document.body.classList.contains("light") ? "1" : "0"); }catch(e){}
+  try{localStorage.setItem("aria_theme",document.body.classList.contains("light")?"1":"0");}catch(e){}
   updateMode();
 });
 
-/* restore */
 (function(){
   try{
-    if(localStorage.getItem("aria_theme") === "1"){
-      document.body.classList.add("light");
-    }
+    if(localStorage.getItem("aria_theme")==="1") document.body.classList.add("light");
   }catch(e){}
   updateMode();
 })();
