@@ -3,30 +3,29 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Aria - Minimal Menu</title>
+<title>Ardian Aryasena - Portofolio Menu</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    --bg-1: #0b0f1a;
-    --bg-2: #0f1a2b;
+    --bg1: #0b0f1a;
+    --bg2: #0f1a2b;
     --accent: #0057ff;
     --text: #e6edf3;
-    --muted: rgba(230,237,243,0.8);
-    --card: rgba(255,255,255,0.04);
+    --muted: rgba(230,237,243,0.85);
+    --glass: rgba(255,255,255,0.04);
   }
 
   body.light{
-    --bg-1: #f6f8fb;
-    --bg-2: #eef4ff;
+    --bg1: #f6f8fb;
+    --bg2: #eef4ff;
     --accent: #0047d6;
     --text: #1a1a1a;
-    --muted: rgba(0,0,0,0.6);
-    --card: rgba(0,0,0,0.06);
+    --muted: rgba(0,0,0,0.65);
+    --glass: rgba(0,0,0,0.06);
   }
 
-  /* animated background */
   body{
     margin:0;
     min-height:100vh;
@@ -35,52 +34,75 @@
     justify-content:center;
     padding:20px;
     font-family:"Montserrat", sans-serif;
-    background:linear-gradient(135deg, var(--bg-1), var(--bg-2));
-    background-size:250% 250%;
-    animation:bgMove 14s ease infinite;
     color:var(--text);
-    -webkit-font-smoothing:antialiased;
+    background:linear-gradient(135deg, var(--bg1), var(--bg2));
+    background-size:260% 260%;
+    animation:bgFlow 18s ease infinite;
+    position:relative;
+    overflow:hidden;
   }
 
-  @keyframes bgMove{
+  @keyframes bgFlow{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
+  }
+
+  /* ORNAMENT BACKGROUND */
+  .orb{
+    position:absolute;
+    width:340px;
+    height:340px;
+    border-radius:50%;
+    filter:blur(110px);
+    opacity:0.35;
+    z-index:0;
+  }
+  .orb.one{
+    background:#003cff;
+    top: -80px;
+    left:-60px;
+  }
+  .orb.two{
+    background:#7f00ff;
+    right:-80px;
+    bottom:-60px;
   }
 
   .wrap{
     width:100%;
     max-width:720px;
     text-align:center;
+    position:relative;
+    z-index:5;
   }
 
-  /* foto profil */
+  /* FOTO PROFIL */
   .pfp{
-    width:110px;
-    height:110px;
+    width:112px;
+    height:112px;
     border-radius:50%;
     object-fit:cover;
-    margin:0 auto 14px auto;
-    box-shadow:0 0 22px rgba(0,87,255,0.32);
+    margin:0 auto 16px auto;
+    box-shadow:0 0 22px rgba(0,87,255,0.36);
   }
 
   .title{
-    font-size:1.3rem;
     margin:0;
+    font-size:1.35rem;
     font-weight:600;
     color:var(--accent);
-    letter-spacing:0.4px;
   }
 
   .subtitle{
-    margin-top:6px;
-    font-size:0.92rem;
+    margin-top:4px;
+    font-size:0.94rem;
     color:var(--muted);
   }
 
-  /* tombol menu */
+  /* MENU BUTTONS */
   .menu{
-    margin-top:26px;
+    margin-top:28px;
     display:flex;
     flex-direction:column;
     gap:12px;
@@ -89,47 +111,53 @@
 
   .menu button{
     width:100%;
-    max-width:330px;
-    padding:14px 12px;
+    max-width:370px;
+    padding:14px 14px;
     border-radius:12px;
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,0.05);
+    color:var(--text);
     font-size:1rem;
     font-weight:600;
-    background:var(--card);
-    color:var(--text);
-    border:1px solid rgba(255,255,255,0.04);
     cursor:pointer;
-    transition: transform 180ms ease, box-shadow 180ms ease;
-    backdrop-filter:blur(4px);
+    backdrop-filter:blur(5px);
+    transition:transform 150ms ease, box-shadow 150ms ease;
   }
 
-  /* animasi saat ditekan */
   .menu button:active{
     transform:scale(0.96);
-    box-shadow:0 8px 28px rgba(0,0,0,0.5);
+    box-shadow:0 10px 28px rgba(0,0,0,0.45);
   }
 
   .menu button:hover{
     transform:translateY(-4px);
-    box-shadow:0 16px 40px rgba(0,0,0,0.42);
+    box-shadow:0 16px 40px rgba(0,0,0,0.45);
   }
 
-  /* mode toggle */
+  .desc{
+    font-size:0.82rem;
+    font-weight:400;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* MODE TOGGLE */
   #modeBtn{
-    margin-top:22px;
-    padding:10px 18px;
+    margin-top:26px;
+    padding:10px 22px;
     border-radius:999px;
-    border:1px solid rgba(255,255,255,0.06);
     background:transparent;
+    border:1px solid rgba(255,255,255,0.07);
     color:var(--muted);
     font-weight:600;
     cursor:pointer;
-    backdrop-filter:blur(4px);
+    backdrop-filter:blur(5px);
     transition:all 180ms ease;
   }
   #modeBtn:hover{
+    transform:translateY(-3px);
     color:var(--accent);
     border-color:rgba(0,87,255,0.3);
-    transform:translateY(-3px);
   }
 
   footer{
@@ -141,58 +169,85 @@
 </head>
 <body>
 
+<!-- Ornamen latar -->
+<div class="orb one"></div>
+<div class="orb two"></div>
+
 <div class="wrap">
 
-  <!--
-    /* FOTO PROFIL DARI GITHUB
-       Ganti YOUR_GITHUB_USERNAME dengan username Anda.
-       Contoh: https://github.com/norypicture.png?size=300
-    */
-  -->
-  <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Profile Photo">
+  <!-- FOTO PROFIL -->
+  <!-- Ganti YOUR_GITHUB_USERNAME -->
+  <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Foto Profil">
 
   <h1 class="title">Ardian Aryasena</h1>
-  <p class="subtitle">Creative professional • Visual & narrative design</p>
+  <p class="subtitle">Portfolio Navigator</p>
 
+  <!-- MENU -->
   <div class="menu">
 
-    <!-- /* TEKS & LINK YANG BISA ANDA UBAH */ -->
-    <button data-key="one">CV ATS</button>
-    <button data-key="two">Portfolio</button>
-    <button data-key="three">Contact</button>
+    <button data-key="cv">
+      Curriculum Vitae
+      <div class="desc">Dokumen CV versi lengkap</div>
+    </button>
+
+    <button data-key="smd">
+      Social Media Graphic Design
+      <div class="desc">Portofolio Desain Grafis untuk Konten Media Sosial</div>
+    </button>
+
+    <button data-key="ill">
+      2D Illustration
+      <div class="desc">Portofolio Ilustrasi 2D dan Pengembangan Visual</div>
+    </button>
+
+    <button data-key="copy">
+      Editorial Copywriting
+      <div class="desc">Portofolio Konten Berbasis Teks dan Storytelling Media</div>
+    </button>
+
+    <button data-key="event">
+      Event Documentation
+      <div class="desc">Portofolio Dokumentasi Kegiatan dan Peliputan Acara</div>
+    </button>
+
+    <button data-key="contact">
+      Contact Me
+      <div class="desc">Hubungi saya untuk kerjasama</div>
+    </button>
 
   </div>
 
   <button id="modeBtn">Light Mode</button>
 
   <footer>
-    <!-- /* Anda boleh ubah bagian ini */ -->
-    © 2025 Ardian Aryasena — Inspired by Behance minimalist UI/UX principles  
+    © 2025 Ardian — Visual system inspired by calm minimalist UI
   </footer>
 
 </div>
 
 <script>
-/* -----------------------------
-   /* GANTI LINK DI SINI
------------------------------- */
+/* --------------------------------------
+   /* UBAH LINK DI SINI SESUAI KEBUTUHAN
+----------------------------------------- */
 const LINKS = {
-  one: "#",        // contoh: "about.html"
-  two: "#",        // contoh: "https://behance.net/yourname"
-  three: "#"       // contoh: "contact.html"
+  cv: "#",
+  smd: "#",
+  ill: "#",
+  copy: "#",
+  event: "#",
+  contact: "#"
 };
 
-/* aktifkan tombol */
+/* klik tombol */
 document.querySelectorAll(".menu button").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const key = btn.dataset.key;
     const url = (LINKS[key] || "").trim();
 
     if(!url || url === "#"){
-      alert("Link tombol ini belum diisi. Edit di bagian LINKS pada script.");
+      alert("Link tombol ini belum diisi. Edit bagian LINKS pada script.");
       return;
     }
-
     window.open(url, "_blank");
   });
 });
@@ -200,7 +255,7 @@ document.querySelectorAll(".menu button").forEach(btn=>{
 /* Light/Dark Mode */
 const modeBtn = document.getElementById("modeBtn");
 
-function updateLabel(){
+function updateMode(){
   modeBtn.textContent = document.body.classList.contains("light")
     ? "Dark Mode"
     : "Light Mode";
@@ -208,18 +263,18 @@ function updateLabel(){
 
 modeBtn.addEventListener("click", ()=>{
   document.body.classList.toggle("light");
-  try { localStorage.setItem("aria_theme", document.body.classList.contains("light") ? "1" : "0"); } catch(e){}
-  updateLabel();
+  try{ localStorage.setItem("aria_theme", document.body.classList.contains("light") ? "1" : "0"); }catch(e){}
+  updateMode();
 });
 
-/* restore preferensi */
+/* restore */
 (function(){
   try{
     if(localStorage.getItem("aria_theme") === "1"){
       document.body.classList.add("light");
     }
   }catch(e){}
-  updateLabel();
+  updateMode();
 })();
 </script>
 
