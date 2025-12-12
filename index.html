@@ -9,27 +9,53 @@
 
 <style>
   :root{
-    --bg1:#f6f8fc;        /* light defaults (we open in light mode) */
-    --bg2:#eef4ff;
-    --accent:#1b5eff;
-    --accent2:#fd4ea8;
-    --text:#111827;
-    --muted:rgba(17,24,39,0.6);
-    --glass:rgba(0,0,0,0.04);
-  }
+    /* skala global +10% */
+    --scale: 1.10;
 
-  /* dark override (applied when body lacks .light) */
-  body:not(.light){
-    --bg1:#0b1220;
-    --bg2:#101b33;
-    --accent:#4b8bff;
+    --bg1-light:#f6f8fc;
+    --bg2-light:#eef4ff;
+    --bg1-dark:#0b1220;
+    --bg2-dark:#101b33;
+
+    --accent-light:#1b5eff;
+    --accent-dark:#4b8bff;
     --accent2:#ff66c4;
-    --text:#e8eef6;
-    --muted:rgba(230,237,243,0.85);
-    --glass:rgba(255,255,255,0.05);
+
+    --text-light:#111827;
+    --text-dark:#e8eef6;
+
+    --muted-light:rgba(17,24,39,0.6);
+    --muted-dark:rgba(230,237,243,0.85);
+
+    --glass-light: rgba(0,0,0,0.04);
+    --glass-dark: rgba(255,255,255,0.05);
+
+    --btn-border: rgba(255,255,255,0.08);
   }
 
-  /* ensure stable centering on mobile */
+  /* default: buka di Light Mode (body class "light") */
+  body.light{
+    --bg1:var(--bg1-light);
+    --bg2:var(--bg2-light);
+    --accent:var(--accent-light);
+    --text:var(--text-light);
+    --muted:var(--muted-light);
+    --glass:var(--glass-light);
+    --btn-border: rgba(0,0,0,0.08);
+  }
+
+  /* jika tidak ada class .light => dark variables */
+  body:not(.light){
+    --bg1:var(--bg1-dark);
+    --bg2:var(--bg2-dark);
+    --accent:var(--accent-dark);
+    --text:var(--text-dark);
+    --muted:var(--muted-dark);
+    --glass:var(--glass-dark);
+    --btn-border: rgba(255,255,255,0.06);
+  }
+
+  /* stabilkan centering di mobile */
   html, body { height:100dvh; }
 
   body{
@@ -38,15 +64,17 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:22px;
+    padding:calc(22px * var(--scale));
     font-family:"Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     background: linear-gradient(135deg, var(--bg1), var(--bg2));
     background-size:240% 240%;
-    animation: bgShift 16s ease infinite;
+    animation: bgShift 18s ease infinite;
     color:var(--text);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    overflow:hidden;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   @keyframes bgShift{
@@ -55,17 +83,33 @@
     100%{background-position:0% 50%;}
   }
 
-  /* decorative orbs */
-  .orb{ position:absolute; width:320px; height:320px; border-radius:50%; filter:blur(120px); opacity:0.28; z-index:0; pointer-events:none; mix-blend-mode:screen; }
-  .orb.one{ background:linear-gradient(135deg,var(--accent), rgba(255,255,255,0.06)); top:-120px; left:-80px; animation: floatA 9s ease-in-out infinite; }
-  .orb.two{ background:linear-gradient(135deg,var(--accent2), rgba(255,255,255,0.04)); right:-100px; bottom:-80px; animation: floatB 11s ease-in-out infinite; }
-  @keyframes floatA{0%{transform:translateY(0)}50%{transform:translateY(-24px)}100%{transform:translateY(0)}}
-  @keyframes floatB{0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)}}
+  /* ornamen orbs (lebih lembut) */
+  .orb{
+    position:absolute;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:0.28;
+    z-index:0;
+    pointer-events:none;
+    mix-blend-mode:screen;
+  }
+  .orb.one{
+    background: linear-gradient(135deg, var(--accent), rgba(255,255,255,0.06));
+    top: -120px; left: -90px; animation: floatA 10s ease-in-out infinite;
+  }
+  .orb.two{
+    background: linear-gradient(135deg, var(--accent2), rgba(255,255,255,0.04));
+    right: -100px; bottom: -80px; animation: floatB 11s ease-in-out infinite;
+  }
+  @keyframes floatA{0%{transform:translateY(0)}50%{transform:translateY(-22px)}100%{transform:translateY(0)}}
+  @keyframes floatB{0%{transform:translateY(0)}50%{transform:translateY(-16px)}100%{transform:translateY(0)}}
 
-  /* wrapper */
+  /* wrapper center */
   .wrap{
     width:100%;
-    max-width:740px;
+    max-width:820px; /* sedikit lebih lebar karena scale */
     text-align:center;
     position:relative;
     z-index:6;
@@ -73,135 +117,158 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:12px;
-    padding: 10px;
+    gap:calc(12px * var(--scale));
+    padding: calc(10px * var(--scale));
     box-sizing:border-box;
   }
 
-  /* profile */
+  /* foto profil diperbesar 10% + shadow */
   .pfp{
-    width:110px;
-    height:110px;
+    width: calc(110px * var(--scale));
+    height: calc(110px * var(--scale));
     border-radius:50%;
     object-fit:cover;
     margin:0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 18px 42px rgba(6,10,25,0.22), 0 2px 8px rgba(0,0,0,0.12);
     transform-origin:center;
-    will-change:transform,box-shadow;
+    will-change:transform, box-shadow;
     animation: popIn 520ms cubic-bezier(.2,.9,.2,1);
   }
-  @keyframes popIn{ from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
+  @keyframes popIn{ from{transform:scale(.94);opacity:0} to{transform:scale(1);opacity:1} }
 
   .title{
-    font-size:1.36rem;
-    margin:4px 0 0 0;
+    font-size: calc(1.36rem * var(--scale));
+    margin: calc(4px * var(--scale)) 0 0 0;
     font-weight:700;
     color:var(--accent);
     letter-spacing:0.2px;
   }
 
   .subtitle{
-    margin:4px 0 8px 0;
-    font-size:0.92rem;
+    margin: calc(4px * var(--scale)) 0 calc(8px * var(--scale)) 0;
+    font-size: calc(0.92rem * var(--scale));
     color:var(--muted);
   }
 
-  /* menu column */
+  /* menu vertical, tombol lebih besar 10% */
   .menu{
-    margin-top:6px;
+    margin-top:calc(8px * var(--scale));
     width:100%;
     display:flex;
     flex-direction:column;
-    gap:12px;
+    gap:calc(12px * var(--scale));
     align-items:center;
-    padding: 6px 0 12px 0;
+    padding: calc(6px * var(--scale)) 0 calc(12px * var(--scale)) 0;
   }
 
-  /* button base */
+  /* tombol: border nyata, shadow halus, ukuran +10% */
   .menu button{
     width:100%;
-    max-width:380px;
-    padding:14px 16px;
-    border-radius:14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); /* subtle glass */
-    border:1px solid rgba(0,0,0,0.06);
+    max-width: calc(420px * var(--scale));
+    padding: calc(14px * var(--scale)) calc(16px * var(--scale));
+    border-radius: calc(14px * var(--scale));
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.006));
+    border: 1px solid var(--btn-border);
     color:var(--text);
-    font-size:1.02rem;
-    font-weight:700; /* bold label */
+    font-size: calc(1.02rem * var(--scale));
+    font-weight:700; /* judul bold */
     cursor:pointer;
     backdrop-filter: blur(6px);
-    transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms;
+    transition: transform 140ms cubic-bezier(.2,.9,.2,1), box-shadow 140ms;
     will-change: transform;
     position:relative;
     overflow:hidden;
+    text-align:center;
+    -webkit-user-select:none; user-select:none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* lighter border & shadow to keep mobile smooth */
-  .menu button:hover{ transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
-  .menu button:active{ transform: scale(0.985); box-shadow: 0 8px 22px rgba(0,0,0,0.14); }
+  /* shadow dan efek tekan lebih lembut untuk smoothness */
+  .menu button:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 18px 42px rgba(2,6,23,0.12);
+  }
 
-  /* small description styling with parentheses */
+  .menu button:active{
+    transform: scale(0.985);
+    box-shadow: 0 10px 26px rgba(2,6,23,0.12);
+  }
+
+  /* deskripsi kecil dalam tanda kurung */
   .desc{
     display:block;
-    margin-top:6px;
-    font-size:0.78rem;
+    margin-top: calc(6px * var(--scale));
+    font-size: calc(0.78rem * var(--scale));
     font-weight:400;
     color:var(--muted);
   }
   .desc::before{ content:"("; margin-right:6px; }
   .desc::after{ content:")"; margin-left:6px; }
 
-  /* ripple element */
+  /* ripple element (performant) */
   .ripple{
     position:absolute;
     border-radius:50%;
-    transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%,-50%) scale(0);
     pointer-events:none;
-    opacity:0.45;
-    background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.0) 60%);
-    animation: rippleAnim 600ms ease-out forwards;
+    opacity:0.42;
+    background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.18) 30%, rgba(255,255,255,0.0) 60%);
+    animation: rippleAnim 620ms ease-out forwards;
+    will-change: transform, opacity;
   }
-  @keyframes rippleAnim{
-    to{ transform: translate(-50%, -50%) scale(8); opacity:0; }
-  }
+  @keyframes rippleAnim{ to{ transform: translate(-50%,-50%) scale(8); opacity:0; } }
 
-  /* staggered entrance for buttons (hardware accelerated) */
-  .menu button{ opacity:0; transform:translateY(10px) scale(0.995); animation: btnIn 420ms ease forwards; }
+  /* button entrance */
+  .menu button{ opacity:0; transform: translateY(12px) scale(.995); animation: btnIn 420ms ease forwards; }
   .menu button:nth-child(1){ animation-delay: 140ms; }
   .menu button:nth-child(2){ animation-delay: 200ms; }
   .menu button:nth-child(3){ animation-delay: 260ms; }
   .menu button:nth-child(4){ animation-delay: 320ms; }
   .menu button:nth-child(5){ animation-delay: 380ms; }
   .menu button:nth-child(6){ animation-delay: 440ms; }
-
   @keyframes btnIn{ to{ opacity:1; transform:translateY(0) scale(1);} }
 
-  /* mode button */
+  /* mode icon button */
   #modeBtn{
-    margin-top:12px;
-    padding:10px 20px;
+    margin-top: calc(12px * var(--scale));
+    padding: calc(10px * var(--scale)) calc(20px * var(--scale));
     border-radius:999px;
     background: transparent;
-    border:1px solid rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
     color:var(--muted);
     font-weight:600;
     cursor:pointer;
-    transition: transform 120ms ease;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition: transform 120ms ease, color 120ms;
   }
   #modeBtn:active{ transform: translateY(1px) scale(.997); }
 
-  footer{ margin-top:16px; font-size:0.82rem; color:var(--muted); }
+  /* icon sizing */
+  .icon-sun, .icon-moon {
+    width: calc(18px * var(--scale));
+    height: calc(18px * var(--scale));
+    display:inline-block;
+    vertical-align:middle;
+    fill: currentColor;
+  }
 
-  /* responsive */
+  footer{
+    margin-top: calc(16px * var(--scale));
+    font-size: calc(0.82rem * var(--scale));
+    color:var(--muted);
+  }
+
+  /* responsive tweaks for small screens */
   @media (max-width:520px){
-    .pfp{ width:96px; height:96px; }
-    .menu button{ max-width:92%; padding:12px 14px; border-radius:12px; font-size:1rem; }
+    .pfp{ width: calc(96px * var(--scale)); height: calc(96px * var(--scale)); }
+    .menu button{ max-width:92%; padding: calc(12px * var(--scale)) calc(14px * var(--scale)); border-radius:calc(12px * var(--scale)); font-size:calc(1rem * var(--scale)); }
     .wrap{ padding-bottom: env(safe-area-inset-bottom); }
   }
 </style>
 </head>
-<body class="light"> <!-- buka default dalam Light Mode -->
+<body class="light"> <!-- buka default Light Mode -->
 
 <!-- orbs -->
 <div class="orb one" aria-hidden="true"></div>
@@ -209,7 +276,7 @@
 
 <div class="wrap" role="main" aria-labelledby="main-title">
 
-  <!-- avatar from GitHub -->
+  <!-- Avatar GitHub (sudah di-set ke ardian-ars) -->
   <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Foto Profil Ardian Aryasena">
 
   <h1 id="main-title" class="title">Ardian Aryasena</h1>
@@ -243,16 +310,24 @@
 
   </div>
 
-  <button id="modeBtn" aria-pressed="true">Dark Mode</button>
+  <!-- mode button with icons -->
+  <button id="modeBtn" aria-pressed="true" aria-label="Toggle theme">
+    <!-- ikon akan diganti via JS sesuai mode -->
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+    </svg>
+    <span id="modeLabel">Dark Mode</span>
+  </button>
 
   <footer>© 2025 Ardian — Playful minimalist UI</footer>
 </div>
 
 <script>
-/* =============
-   EDIT LINKS
-   Ganti '#' dengan URL yang Anda inginkan
-   ============= */
+/* ============================
+   TEMPAT UNTUK MENGGANTI LINK
+   Ubah nilai di bawah sesuai kebutuhan.
+   Contoh: cv: 'cv.pdf' atau cv: 'about.html'
+   ============================ */
 const LINKS = {
   cv: "#",
   smd: "#",
@@ -262,70 +337,80 @@ const LINKS = {
   contact: "#"
 };
 
-/* open link on click + ripple animation */
+/* fungsi pembuat ripple sederhana & performan
+   - pakai passive listener untuk menghindari blocking
+*/
 document.querySelectorAll('.menu button').forEach(btn=>{
-  btn.addEventListener('click', function (e) {
-    // ripple
+  btn.addEventListener('click', function(e){
+    // buat ripple di posisi sentuh/klik
     const rect = btn.getBoundingClientRect();
-    const x = (e.clientX || rect.left + rect.width/2) - rect.left;
-    const y = (e.clientY || rect.top + rect.height/2) - rect.top;
+    const clientX = e.clientX || (rect.left + rect.width/2);
+    const clientY = e.clientY || (rect.top + rect.height/2);
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
     const ripple = document.createElement('span');
     ripple.className = 'ripple';
     ripple.style.left = x + 'px';
     ripple.style.top = y + 'px';
     btn.appendChild(ripple);
-    // remove after animation
-    setTimeout(()=> ripple.remove(), 700);
+    // hapus setelah anim selesai (safety)
+    setTimeout(()=> { ripple.remove(); }, 700);
 
-    // open link after tiny delay so ripple is visible
+    // buka link setelah delay singkat agar ripple terlihat
     const key = btn.dataset.key;
     const url = (LINKS[key] || '').trim();
     if(!url || url === '#'){
-      // show non-blocking toast-like alert (simple)
-      setTimeout(()=> alert('Link tombol ini belum diset. Edit bagian LINKS pada script.'), 160);
+      // non-blocking feedback
+      setTimeout(()=> alert('Link tombol ini belum diset. Edit bagian LINKS pada script.'), 150);
       return;
     }
-    // small delay to allow ripple to show
     setTimeout(()=> window.open(url, '_blank'), 140);
   }, {passive: true});
 });
 
-/* Light / Dark toggle logic
-   Page opens default in light mode (body has class "light").
-   Mode button reflects opposite action (click to switch).
+/* MODE ICONS & LOGIC
+   - halaman dibuka default Light (body class "light")
+   - tombol menampilkan ikon matahari bila dark-switch diperlukan (mode shows opposite)
 */
 const modeBtn = document.getElementById('modeBtn');
+const modeLabel = document.getElementById('modeLabel');
 
-function updateModeState(){
+function setModeUI(){
   const isLight = document.body.classList.contains('light');
-  modeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+  // ubah ikon svg
+  modeBtn.innerHTML = isLight
+    ? `<svg class="icon-sun" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+         <path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.8 1.8-1.8zM1 13h3v-2H1v2zm10 9h2v-3h-2v3zm7.66-17.66l-1.79 1.8 1.8 1.8 1.79-1.8-1.8-1.8zM17 13h3v-2h-3v2zM4.22 19.78l1.8-1.79-1.8-1.8-1.79 1.8 1.79 1.79zM13 4h-2v3h2V4zm0 13a5 5 0 100-10 5 5 0 000 10z"/>
+       </svg><span id="modeLabel">Dark Mode</span>`
+    : `<svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+       </svg><span id="modeLabel">Light Mode</span>`;
   modeBtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
-  // persist preference
-  try{ localStorage.setItem('aria_theme', isLight ? '1' : '0'); }catch(e){}
 }
 
-// initialize: respect saved preference if present
+// inisialisasi tema dari localStorage (jika ada)
 (function initTheme(){
   try{
     const saved = localStorage.getItem('aria_theme');
-    if(saved === '0'){ // saved as dark
+    if(saved === '0'){
       document.body.classList.remove('light');
     } else {
-      // default to light (already set by HTML body class)
-      document.body.classList.add('light');
+      document.body.classList.add('light'); // default buka light
     }
   }catch(e){
     document.body.classList.add('light');
   }
-  updateModeState();
+  setModeUI();
 })();
 
 modeBtn.addEventListener('click', ()=>{
   document.body.classList.toggle('light');
-  updateModeState();
+  // simpan preferensi (1 = light, 0 = dark)
+  try{ localStorage.setItem('aria_theme', document.body.classList.contains('light') ? '1' : '0'); }catch(e){}
+  // update tombol icon/label
+  setModeUI();
 });
-
 </script>
 </body>
 </html>
