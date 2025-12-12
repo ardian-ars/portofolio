@@ -8,17 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-  /* global box-sizing */
-  *, *::before, *::after { box-sizing: border-box; }
-
   :root{
     --bg1:#0b1220;
     --bg2:#101b33;
-    --accent:#4b8bff;
-    --accent2:#ff66c4;
+    --accent:#4b8bff;      /* primary blue accent */
+    --accent2:#ff66c4;     /* secondary pink accent */
     --text:#e8eef6;
     --muted:rgba(230,237,243,0.85);
-    --glass:rgba(255,255,255,0.05);
+    --glass:rgba(255,255,255,0.04);
+    --button-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    --button-border: rgba(255,255,255,0.06);
+    --shadow: 0 8px 30px rgba(11,16,32,0.45);
+    --btn-hover-glow: 0 8px 40px rgba(75,139,255,0.18);
   }
 
   body.light{
@@ -28,24 +29,22 @@
     --accent2:#fd4ea8;
     --text:#1a1a1a;
     --muted:rgba(0,0,0,0.6);
-    --glass:rgba(0,0,0,0.05);
+    --glass:rgba(0,0,0,0.04);
+    --button-bg: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
+    --button-border: rgba(0,0,0,0.08);
+    --shadow: 0 8px 30px rgba(0,0,0,0.08);
+    --btn-hover-glow: 0 8px 40px rgba(27,94,255,0.12);
   }
 
-  /* viewport fallback + tidak memblokir scroll */
-  html, body {
-    height: 100dvh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-  }
+  html, body { height:100dvh; }
 
   body{
     margin:0;
-    min-height:100vh;
+    min-height:100dvh;
     display:flex;
-    align-items:flex-start;           /* penting: jangan center vertikal */
+    align-items:center;
     justify-content:center;
-    padding:28px 18px;                /* beri ruang atas/bawah untuk scroll */
+    padding:22px;
     font-family:"Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     background:linear-gradient(135deg, var(--bg1), var(--bg2));
     animation:bgshift 14s ease infinite;
@@ -53,11 +52,7 @@
     color:var(--text);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-
-    /* izinkan scroll vertikal jika konten lebih panjang */
-    overflow-x:hidden;
-    overflow-y:auto;
-    -webkit-overflow-scrolling: touch; /* smoother scroll on iOS */
+    overflow:hidden;
   }
 
   @keyframes bgshift{
@@ -66,60 +61,43 @@
     100%{background-position:0% 50%;}
   }
 
-  /* ORNAMENT PLAYFUL (vw-based agar tidak overflow) */
-  .orb{
-    position:absolute;
-    width:55vw;
-    height:55vw;
-    max-width:420px;
-    max-height:420px;
-    border-radius:50%;
-    filter:blur(120px);
-    opacity:0.30;
-    z-index:0;
-    pointer-events:none;
-  }
-  .orb.one{ background:var(--accent); top:-18vw; left:-12vw; animation: float1 10s ease-in-out infinite; }
-  .orb.two{ background:var(--accent2); right:-14vw; bottom:-12vw; animation: float2 9s ease-in-out infinite; }
+  .orb{ position:absolute; width:300px; height:300px; border-radius:50%; filter:blur(120px); opacity:0.30; z-index:0; pointer-events:none;}
+  .orb.one{ background:var(--accent); top:-80px; left:-60px; animation: float1 10s ease-in-out infinite; }
+  .orb.two{ background:var(--accent2); right:-80px; bottom:-60px; animation: float2 9s ease-in-out infinite; }
   @keyframes float1 { 0%{transform:translateY(0)}50%{transform:translateY(-28px)}100%{transform:translateY(0)} }
   @keyframes float2 { 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
 
-  /* WRAP: center horizontally, allow vertical growth */
   .wrap{
-    width: calc(100% - 36px); /* beri margin sisi */
-    max-width: 420px;
-    margin: 18px auto;        /* beri margin top agar tidak langsung di pinggir */
+    width:100%;
+    max-width:720px;
     text-align:center;
     position:relative;
     z-index:5;
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:flex-start; /* jangan center vertikal */
+    justify-content:center;
     gap:12px;
-    padding: 14px;
+    padding: 10px;
     box-sizing:border-box;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-    border-radius: 12px;
-    /* shadow ringan supaya terlihat terangkat dari background */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   }
 
-  /* PROFILE PHOTO */
   .pfp{
     width:110px;
     height:110px;
     border-radius:50%;
     object-fit:cover;
-    margin:8px 0 0 0;
+    margin:0;
     box-shadow:0 6px 28px rgba(75,139,255,0.45);
+    transform-origin:center;
+    will-change:transform;
     animation: popin 560ms cubic-bezier(.2,.9,.2,1);
   }
   @keyframes popin { from{transform:scale(.86);opacity:0} to{transform:scale(1);opacity:1} }
 
   .title{
     font-size:1.4rem;
-    margin:6px 0 0 0;
+    margin:4px 0 0 0;
     font-weight:700;
     color:var(--accent);
     letter-spacing:0.2px;
@@ -131,7 +109,6 @@
     color:var(--muted);
   }
 
-  /* MENU */
   .menu{
     margin-top:8px;
     width:100%;
@@ -142,41 +119,143 @@
     padding: 6px 0 12px 0;
   }
 
-  .menu button{
+  /* TOMBOL: desain mengikuti gambar 1, hover mengikuti gambar 2 */
+  .menu .btn-link{
     width:100%;
     max-width:380px;
-    padding:14px 16px;
-    border-radius:14px;
-    background:var(--glass);
-    border:1px solid rgba(255,255,255,0.06);
+    padding:12px 16px;
+    border-radius:999px; /* rounded pill like image 1 */
+    background:var(--button-bg);
+    border:1px solid var(--button-border);
     color:var(--text);
     font-size:1.02rem;
     font-weight:700;
     cursor:pointer;
-    backdrop-filter: blur(5px);
-    transition: transform 110ms linear, box-shadow 140ms linear;
+    backdrop-filter: blur(6px);
+    transition:
+      transform 180ms cubic-bezier(.2,.9,.2,1),
+      box-shadow 220ms cubic-bezier(.2,.9,.2,1),
+      background-position 420ms ease,
+      border-color 220ms ease,
+      color 160ms ease;
     will-change: transform;
-    text-align:center;
+    text-align:left;
     position:relative;
     overflow:hidden;
+    display:inline-flex;
+    align-items:center;
+    gap:14px;
+    padding-right:54px; /* space for icon */
+    box-shadow: var(--shadow);
   }
 
-  .menu button:active{ transform: scale(0.985); box-shadow: 0 10px 24px rgba(0,0,0,0.38); }
+  /* internal gradient stripe to emulate left accent from image 1 */
+  .menu .btn-link::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:6px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-top-left-radius:999px;
+    border-bottom-left-radius:999px;
+    transform-origin:left;
+    transition: width 280ms ease, opacity 220ms ease;
+    opacity:1;
+  }
+
+  .menu .btn-inner{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    z-index:2;
+    width:100%;
+  }
+
+  .menu .btn-inner .label{
+    flex-grow:1;
+    text-align:left;
+  }
 
   .menu .desc{
     display:block;
-    margin-top:6px;
+    margin-top:4px;
     font-size:0.78rem;
-    font-weight:400;
+    font-weight:500;
     color:var(--muted);
+    opacity:0.95;
+    line-height:1.05;
   }
-  .menu .desc::before{ content:"("; margin-right:4px; opacity:0.9; }
-  .menu .desc::after{ content:")"; margin-left:4px; opacity:0.9; }
 
-  /* mode toggle */
+  /* ikon open in new tab di kanan */
+  .menu .ext-icon{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    width:22px;
+    height:22px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    z-index:3;
+    opacity:0.92;
+  }
+
+  .menu .ext-icon svg{ width:18px; height:18px; display:block; }
+
+  /* hover efek: warna dan animasi seperti gambar 2 */
+  .menu .btn-link:hover,
+  .menu .btn-link:focus{
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: var(--btn-hover-glow), 0 18px 40px rgba(0,0,0,0.18);
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  .menu .btn-link:hover::before,
+  .menu .btn-link:focus::before{
+    width:10px;
+    opacity:1;
+  }
+
+  .menu .btn-link:hover .desc,
+  .menu .btn-link:focus .desc{
+    color:var(--text);
+    opacity:0.95;
+  }
+
+  /* subtle animated gradient on hover */
+  .menu .btn-link::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background: radial-gradient(600px 160px at 10% 50%, rgba(75,139,255,0.06), transparent 12%),
+                radial-gradient(500px 140px at 90% 50%, rgba(255,102,196,0.03), transparent 12%);
+    pointer-events:none;
+    transition:opacity 360ms ease, transform 420ms ease;
+    opacity:0;
+    transform: translateY(8px);
+  }
+
+  .menu .btn-link:hover::after,
+  .menu .btn-link:focus::after{
+    opacity:1;
+    transform: translateY(0);
+  }
+
+  /* focus visible */
+  .menu .btn-link:focus{
+    outline: none;
+  }
+  .menu .btn-link:focus-visible{
+    box-shadow: 0 0 0 4px rgba(75,139,255,0.09);
+  }
+
   #modeBtn{
     margin-top:12px;
-    padding:10px 20px;
+    padding:10px 16px;
     border-radius:999px;
     background:transparent;
     border:1px solid rgba(255,255,255,0.08);
@@ -184,7 +263,12 @@
     font-weight:600;
     cursor:pointer;
     transition:transform 140ms ease, color 140ms;
+    display:inline-flex;
+    gap:10px;
+    align-items:center;
   }
+  #modeBtn svg{ width:18px; height:18px; display:block; }
+
   #modeBtn:active{ transform:translateY(1px) scale(.997); }
 
   footer{
@@ -193,14 +277,10 @@
     color:var(--muted);
   }
 
-  /* responsive tweaks */
   @media (max-width:520px){
     .pfp{ width:96px; height:96px; }
-    .menu button{ max-width:92%; padding:12px 14px; border-radius:12px; font-size:1rem; }
-    .wrap{ padding-bottom: calc(env(safe-area-inset-bottom) + 12px); }
-  }
-  @media (min-width:900px){
-    .wrap { max-width:720px; width: calc(100% - 80px); }
+    .menu .btn-link{ max-width:92%; padding:10px 14px; border-radius:12px; font-size:1rem; padding-right:48px; }
+    .wrap{ padding-bottom: env(safe-area-inset-bottom); }
   }
 </style>
 </head>
@@ -212,87 +292,196 @@
 
 <div class="wrap" role="main" aria-labelledby="main-title">
 
-  <!-- FOTO PROFIL DARI GITHUB: ganti YOUR_GITHUB_USERNAME -->
-  <img class="pfp" src="https://github.com/YOUR_GITHUB_USERNAME.png?size=300" alt="Foto Profil Ardian Aryasena">
+  <!-- FOTO PROFIL: ganti username GitHub -->
+  <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Foto Profil Ardian Aryasena">
 
-  <!-- NAMA -->
   <h1 id="main-title" class="title">Ardian Aryasena</h1>
   <p class="subtitle">Visual Portfolio Navigator</p>
 
-  <!-- MENU 6 tombol -->
   <div class="menu" role="navigation" aria-label="Primary menu">
 
-    <button data-key="cv">Curriculum Vitae</button>
-
-    <button data-key="smd">
-      Social Media Graphic Design
-      <span class="desc">Portofolio Desain Grafis untuk Konten Media Sosial</span>
+    <button class="btn-link" data-key="cv" aria-label="Open Curriculum Vitae in new tab">
+      <span class="btn-inner">
+        <span class="label">
+          Curriculum Vitae
+          <span class="desc">Resume profesional dan pengalaman kerja</span>
+        </span>
+      </span>
+      <span class="ext-icon" aria-hidden="true">
+        <!-- open in new tab icon -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 3H21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 3L10 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 21H3V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
     </button>
 
-    <button data-key="ill">
-      2D Illustration
-      <span class="desc">Portofolio Ilustrasi 2D dan Pengembangan Visual</span>
+    <button class="btn-link" data-key="smd" aria-label="Open Social Media Graphic Design in new tab">
+      <span class="btn-inner">
+        <span class="label">
+          Social Media Graphic Design
+          <span class="desc">Portofolio Desain Grafis untuk Konten Media Sosial</span>
+        </span>
+      </span>
+      <span class="ext-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 3H21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 3L10 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 21H3V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
     </button>
 
-    <button data-key="copy">
-      Editorial Copywriting
-      <span class="desc">Portofolio Konten Teks dan Storytelling Media</span>
+    <button class="btn-link" data-key="ill" aria-label="Open 2D Illustration in new tab">
+      <span class="btn-inner">
+        <span class="label">
+          2D Illustration
+          <span class="desc">Portofolio Ilustrasi 2D dan Pengembangan Visual</span>
+        </span>
+      </span>
+      <span class="ext-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 3H21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 3L10 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 21H3V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
     </button>
 
-    <button data-key="event">
-      Event Documentation
-      <span class="desc">Dokumentasi Kegiatan & Peliputan Acara</span>
+    <button class="btn-link" data-key="copy" aria-label="Open Editorial Copywriting in new tab">
+      <span class="btn-inner">
+        <span class="label">
+          Editorial Copywriting
+          <span class="desc">Portofolio Konten Teks dan Storytelling Media</span>
+        </span>
+      </span>
+      <span class="ext-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 3H21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 3L10 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 21H3V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
     </button>
 
-    <button data-key="contact">Contact Me</button>
+    <button class="btn-link" data-key="event" aria-label="Open Event Documentation in new tab">
+      <span class="btn-inner">
+        <span class="label">
+          Event Documentation
+          <span class="desc">Dokumentasi Kegiatan dan Peliputan Acara</span>
+        </span>
+      </span>
+      <span class="ext-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 3H21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 3L10 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 21H3V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <button class="btn-link" data-key="contact" aria-label="Open Contact Me in new tab">
+      <span class="btn-inner">
+        <span class="label">
+          Contact Me
+        </span>
+      </span>
+      <span class="ext-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 3H21V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 3L10 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 21H3V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
 
   </div>
 
-  <button id="modeBtn" aria-pressed="false">Light Mode</button>
+  <button id="modeBtn" aria-pressed="false" title="Toggle light/dark mode">
+    <!-- default: moon (dark mode available) -->
+    <span id="modeIcon" aria-hidden="true">
+      <!-- moon icon -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span id="modeLabel">Light Mode</span>
+  </button>
 
-  <footer>© 2025 Ardian — Playful minimalist UI</footer>
+  <footer>© 2025 Ardian. Playful minimalist UI</footer>
 </div>
 
 <script>
 /* ==============================
-   /* GANTI LINK DI SINI (dalam JS)
+   Link configuration
    ============================== */
 const LINKS = {
-  cv: "#",
-  smd: "#",
-  ill: "#",
-  copy: "#",
-  event: "#",
-  contact: "#"
+  cv: "https://example.com/cv",
+  smd: "https://example.com/social",
+  ill: "https://example.com/illustration",
+  copy: "https://example.com/copy",
+  event: "https://example.com/event",
+  contact: "https://example.com/contact"
 };
 
-document.querySelectorAll('.menu button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
+/* open link saat tombol diklik, buka di tab baru */
+document.querySelectorAll('.menu .btn-link').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
     const key = btn.dataset.key;
     const url = (LINKS[key] || '').trim();
-    if(!url || url === '#'){
-      alert('Link tombol ini belum diset. Edit objek LINKS pada script.');
+    if(!url){
+      // fallback: fokuskan tombol saja
+      console.warn('Link tombol ini belum diset untuk key:', key);
       return;
     }
-    window.open(url, '_blank');
+    // buka di tab baru
+    window.open(url, '_blank', 'noopener,noreferrer');
   }, {passive: true});
 });
 
-/* Light / Dark mode */
+/* Light / Dark mode dengan ikon */
 const modeBtn = document.getElementById('modeBtn');
-function updateModeLabel(){
-  const isLight = document.body.classList.contains('light');
-  modeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
-  modeBtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+const modeIcon = document.getElementById('modeIcon');
+const modeLabel = document.getElementById('modeLabel');
+
+function setMode(isLight){
+  if(isLight){
+    document.body.classList.add('light');
+    modeBtn.setAttribute('aria-pressed', 'true');
+    modeLabel.textContent = 'Dark Mode';
+    // show sun icon
+    modeIcon.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+  }else{
+    document.body.classList.remove('light');
+    modeBtn.setAttribute('aria-pressed', 'false');
+    modeLabel.textContent = 'Light Mode';
+    // show moon icon
+    modeIcon.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+  }
 }
+
 modeBtn.addEventListener('click', ()=>{
   const isLight = document.body.classList.toggle('light');
   try{ localStorage.setItem('aria_theme', isLight ? '1' : '0'); }catch(e){}
-  updateModeLabel();
+  setMode(isLight);
 });
+
+/* restore saved preference */
 (function(){
-  try{ if(localStorage.getItem('aria_theme') === '1') document.body.classList.add('light'); }catch(e){}
-  updateModeLabel();
+  try{
+    const saved = localStorage.getItem('aria_theme');
+    setMode(saved === '1');
+  }catch(e){
+    setMode(false);
+  }
 })();
 
 </script>
