@@ -10,8 +10,8 @@
 
 <style>
   /* ----------------------------
-     /* PALETTE & VARIABEL GLOBAL
-     /* ---------------------------- */
+     PALETTE & VARIABEL GLOBAL
+     ---------------------------- */
   :root{
     --bg1: #f6f8fc;
     --bg2: #eef4ff;
@@ -26,15 +26,15 @@
   }
 
   /* ----------------------------
-     /* TYPOGRAPHY RESPONSIF
-     /* ---------------------------- */
+     TYPOGRAPHY RESPONSIF
+     ---------------------------- */
   html { font-size: 16px; }
   @media (min-width: 480px) { html { font-size: 16.5px; } }
   @media (min-width: 900px) { html { font-size: 17px; } }
 
   html, body { height:100dvh; margin:0; }
 
-  /* /* BODY: layout dasar halaman */ */
+  /* BODY: layout dasar halaman */
   body{
     min-height:100dvh;
     display:flex;
@@ -49,7 +49,7 @@
     overflow:auto;
   }
 
-  /* /* WRAPPER: pembungkus utama, fleksibel dan responsif */ */
+  /* WRAPPER: pembungkus utama, fleksibel dan responsif */
   .wrap{
     width: min(96%, 920px);
     display:flex;
@@ -58,12 +58,10 @@
     padding:20px;
     box-sizing:border-box;
     align-items:center;
-    background: transparent; /* tetap transparan agar background terlihat */
+    background: transparent;
   }
 
-  /* ----------------------------
-     /* HEADER: foto profil, nama, subtitle
-     /* ---------------------------- */
+  /* HEADER: foto profil, nama, subtitle */
   .header{
     display:flex;
     flex-direction:column;
@@ -72,17 +70,19 @@
     width:100%;
   }
 
-  /* /* FOTO PROFIL: bulat (lingkaran) dan dibuat lebih besar */ */
+  /* FOTO PROFIL: lingkaran besar dan responsif
+     /* contoh ini bagian foto profil yang dibulatkan */ */
   .pfp{
-    /* ukuran responsif: minimal 110px, ideal 18vw, maksimal 200px */
-    width: clamp(110px, 18vw, 200px);
-    height: clamp(110px, 18vw, 200px);
+    /* ukuran responsif: minimal 140px, ideal 20vw, maksimal 220px */
+    width: clamp(140px, 20vw, 220px);
+    height: clamp(140px, 20vw, 220px);
     border-radius:50%;               /* pastikan lingkaran sempurna */
     object-fit:cover;
     box-shadow: var(--soft-shadow);
     transform-origin:center;
     transition: transform 220ms ease, box-shadow 220ms ease;
-    border: 4px solid rgba(255,255,255,0.85); /* bingkai tipis agar foto kelihatan lebih rapi */
+    border: 4px solid rgba(255,255,255,0.85); /* bingkai tipis */
+    background-color: #fff;
   }
   .pfp:hover{
     transform: translateY(-6px);
@@ -105,9 +105,7 @@
     text-align:center;
   }
 
-  /* ----------------------------
-     /* MENU: tombol utama
-     /* ---------------------------- */
+  /* MENU: tombol utama */
   .menu{
     width:100%;
     display:flex;
@@ -117,7 +115,8 @@
     padding: 2px 0 8px 0;
   }
 
-  /* /* TOMBOL: card-like, responsif, shadow lembut */ */
+  /* TOMBOL: card-like, responsif, shadow lembut
+     /* contoh ini bagian styling tombol */ */
   .menu .btn-link{
     width: clamp(280px, 86%, 780px);
     padding: 14px 18px;
@@ -139,7 +138,6 @@
     transition: transform 160ms ease, box-shadow 200ms ease, background 160ms ease;
   }
 
-  /* /* Hover tombol memberikan efek angkat dan shadow yang lebih lembut */ */
   .menu .btn-link:hover{
     transform: translateY(-4px);
     box-shadow: var(--soft-shadow);
@@ -162,7 +160,6 @@
     font-weight:600;
   }
 
-  /* /* DESKRIPSI: lebih kecil dan pakai tanda kurung */ */
   .desc{
     display:block;
     margin:0;
@@ -175,7 +172,7 @@
   .desc::before{ content:"("; margin-right:6px; opacity:0.9; color:var(--muted); }
   .desc::after{ content:")"; margin-left:6px; opacity:0.9; color:var(--muted); }
 
-  /* /* Sembunyikan deskripsi untuk CV */ */
+  /* hide CV description */
   .menu .btn-link[data-key="cv"] .desc{ display:none; }
 
   .ext-icon{
@@ -193,20 +190,7 @@
   }
   .ext-icon svg{ width:18px; height:18px; display:block; stroke:currentColor; fill:none; }
 
-  /* ----------------------------
-     /* FOOTER: teks copyright dan pembatas
-     /* ---------------------------- */
-  .divider{
-    margin-top:6px;
-    width:100%;
-    max-width:760px;
-    height:8px;
-    border-radius:6px;
-    background: linear-gradient(90deg, #FFD54F 4%, #FF7043 34%, #FFCDD2 64%, #90CAF9 100%);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    overflow:hidden;
-  }
-
+  /* FOOTER: teks copyright */
   footer{
     margin-top:6px;
     font-size:0.86rem;
@@ -214,10 +198,8 @@
     text-align:center;
   }
 
-  /* ----------------------------
-     /* BUBBLE MESSAGES: WhatsApp & Instagram
-     /* ---------------------------- */
-  /* /* WA bubble: pojok kanan bawah */ */
+  /* BUBBLE MESSAGES: WhatsApp & Instagram */
+  /* WA bubble: pojok kanan bawah (link ke www.whatsapp.com) */
   .wa-bubble{
     position:fixed;
     right:18px;
@@ -237,11 +219,11 @@
   .wa-bubble:hover{ transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.22); }
   .wa-bubble svg{ width:20px; height:20px; display:block; flex-shrink:0; }
 
-  /* /* IG bubble: sedikit di atas WA (offset) */ */
+  /* IG bubble: sedikit di atas WA (link ke instagram.com) */
   .ig-bubble{
     position:fixed;
     right:18px;
-    bottom:78px; /* 60px di atas WA untuk jarak yang enak */
+    bottom:78px; /* jarak di atas WA */
     background: var(--ig-grad);
     color:white;
     display:inline-flex;
@@ -257,41 +239,40 @@
   .ig-bubble:hover{ transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.22); }
   .ig-bubble svg{ width:20px; height:20px; display:block; flex-shrink:0; }
 
-  /* ----------------------------
-     /* MEDIA QUERIES: tweak untuk layar kecil
-     /* ---------------------------- */
+  /* MEDIA QUERIES: tweak untuk layar kecil */
   @media (max-width:420px){
     .wa-bubble{ right:12px; bottom:12px; padding:8px 10px; }
     .ig-bubble{ right:12px; bottom:64px; padding:8px 10px; }
     .menu .btn-link{ padding:12px 12px; }
-    .pfp{ width: clamp(96px, 24vw, 140px); height: clamp(96px, 24vw, 140px); }
+    .pfp{ width: clamp(110px, 30vw, 160px); height: clamp(110px, 30vw, 160px); }
   }
 
 </style>
 </head>
 <body>
 
-<!-- /* WRAPPER UTAMA */ -->
+<!-- WRAPPER UTAMA -->
 <div class="wrap" role="main" aria-labelledby="main-title">
 
-  <!-- /* BAGIAN HEADER: foto profil, nama, subtitle */ -->
+  <!-- HEADER: foto profil, nama, subtitle -->
   <div class="header" aria-hidden="false">
-    <!-- /* Foto profil dari GitHub - sudah diganti ke username ardian-ars */ -->
-    <img class="pfp" src="https://github.com/ardian-ars.png?size=300" alt="Foto Profil Ardian Aryasena">
+    <!-- Foto profil dari GitHub - username ardian-ars
+         /* contoh ini bagian img profil */ -->
+    <img class="pfp" src="https://github.com/ardian-ars.png?size=460" alt="Foto Profil Ardian Aryasena">
     <h1 id="main-title" class="title">Ardian Aryasena</h1>
     <p class="subtitle">Visual Portfolio Navigator</p>
   </div>
 
-  <!-- /* NAV: daftar tombol/menu */ -->
+  <!-- NAV: daftar tombol/menu -->
   <nav class="menu" role="navigation" aria-label="Primary menu">
 
-    <!-- /* Tombol CV tanpa deskripsi */ -->
+    <!-- Tombol CV tanpa deskripsi -->
     <button class="btn-link" data-key="cv" aria-label="Open Curriculum Vitae in new tab">
       <span class="btn-inner">
         <span class="label">Curriculum Vitae</span>
       </span>
       <span class="ext-icon" aria-hidden="true" title="Open in new tab">
-        <!-- /* ikon open in new tab */ -->
+        <!-- ikon open in new tab -->
         <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M14 3H21V10" />
           <path d="M21 3L10 14" />
@@ -300,7 +281,6 @@
       </span>
     </button>
 
-    <!-- /* Tombol Social Media Graphic Design */ -->
     <button class="btn-link" data-key="smd" aria-label="Open Social Media Graphic Design in new tab">
       <span class="btn-inner">
         <span class="label">Social Media Graphic Design</span>
@@ -315,7 +295,6 @@
       </span>
     </button>
 
-    <!-- /* Tombol 2D Illustration */ -->
     <button class="btn-link" data-key="ill" aria-label="Open 2D Illustration in new tab">
       <span class="btn-inner">
         <span class="label">2D Illustration</span>
@@ -330,7 +309,6 @@
       </span>
     </button>
 
-    <!-- /* Tombol Editorial Copywriting */ -->
     <button class="btn-link" data-key="copy" aria-label="Open Editorial Copywriting in new tab">
       <span class="btn-inner">
         <span class="label">Editorial Copywriting</span>
@@ -345,7 +323,6 @@
       </span>
     </button>
 
-    <!-- /* Tombol Event Documentation */ -->
     <button class="btn-link" data-key="event" aria-label="Open Event Documentation in new tab">
       <span class="btn-inner">
         <span class="label">Event Documentation</span>
@@ -360,7 +337,7 @@
       </span>
     </button>
 
-    <!-- /* Tombol Contact: membuka mailto: */ -->
+    <!-- Contact button akan membuka mailto: -->
     <button class="btn-link" data-key="contact" aria-label="Send email to Ardian">
       <span class="btn-inner">
         <span class="label">Contact Me</span>
@@ -377,14 +354,15 @@
 
   </nav>
 
-  <!-- /* PEMBATAS WARNA SEBELUM COPYRIGHT */ -->
-  <div class="divider" aria-hidden="true"></div>
+  <!-- PEMBATAS (opsional) -->
+  <!-- <div class="divider" aria-hidden="true"></div> -->
 
-  <!-- /* FOOTER: copyright */ -->
+  <!-- FOOTER: copyright -->
   <footer>© 2025 Ardian. Playful minimalist UI</footer>
 </div>
 
-<!-- /* BUBBLE WHATSAPP: buka www.whatsapp.com */ -->
+<!-- BUBBLE WHATSAPP: buka www.whatsapp.com
+     /* contoh ini bagian bubble WA */ -->
 <a class="wa-bubble" href="https://www.whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="Buka WhatsApp">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M20.52 3.48A11.97 11.97 0 0012 0C5.37 0 .02 5.35.02 12c0 2.12.55 4.17 1.6 6.01L0 24l6.2-1.59A11.96 11.96 0 0012 24c6.63 0 12-5.35 12-12 0-3.21-1.24-6.22-3.48-8.52z" stroke="white" stroke-width="0.6" fill="white" opacity="0.06"/>
@@ -393,9 +371,9 @@
   <span style="font-weight:600;font-size:0.93rem;">WhatsApp</span>
 </a>
 
-<!-- /* BUBBLE INSTAGRAM: buka instagram.com */ -->
+<!-- BUBBLE INSTAGRAM: buka instagram.com
+     /* contoh ini bagian bubble Instagram */ -->
 <a class="ig-bubble" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Buka Instagram">
-  <!-- /* ikon Instagram sederhana */ -->
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="white">
     <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.2A4.8 4.8 0 1016.8 13 4.8 4.8 0 0012 8.2zM18.5 6.2a1.1 1.1 0 11-1.1-1.1 1.1 1.1 0 011.1 1.1z" opacity="0.98"/>
   </svg>
@@ -403,22 +381,17 @@
 </a>
 
 <script>
-/* ================================
-   /* KONFIGURASI LINK UNTUK TOMBOL
-   /* ================================ */
+/* KONFIGURASI LINK UNTUK TOMBOL (contoh bagian pengaturan link) */
 const LINKS = {
   cv: "https://example.com/cv",
   smd: "https://example.com/social",
   ill: "https://example.com/illustration",
   copy: "https://example.com/copy",
   event: "https://example.com/event",
-  /* /* Contact menggunakan mailto: untuk membuka klien email */ */
   contact: "mailto:ardian.aryasena@gmail.com"
 };
 
-/* --------------------------------
-   /* FUNGSI: membuka link ketika tombol diklik
-   /* -------------------------------- */
+/* FUNGSI: membuka link ketika tombol diklik (contoh bagian interaksi tombol) */
 document.querySelectorAll('.menu .btn-link').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     const key = btn.dataset.key;
@@ -428,17 +401,15 @@ document.querySelectorAll('.menu .btn-link').forEach(btn=>{
       return;
     }
     if(url.startsWith('mailto:')) {
-      /* /* Jika mailto:, gunakan location.href agar mail client terbuka */ */
-      window.location.href = url;
+      window.location.href = url; // membuka email client
     } else {
-      /* /* Untuk tautan biasa buka di tab baru */ */
       window.open(url, '_blank', 'noopener,noreferrer');
     }
   }, {passive: true});
 });
 
-/* Kode berikut sengaja kosong karena mode selalu light (sesuai permintaan).
-   Tidak perlu toggle mode atau penyimpanan preferensi.
+/* MODE: halaman hanya menggunakan light mode (tidak ada toggle).
+   Kode ini sengaja kosong karena semua gaya sudah memakai light mode.
 */
 </script>
 </body>
